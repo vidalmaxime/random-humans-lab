@@ -5,7 +5,7 @@ import { collection, addDoc } from "firebase/firestore";
 function TestExperiment({ name }: TestExperimentProps) {
   return (
     <div>
-      <p>{name}</p>
+      <p className="text-black"> {name}</p>
     </div>
   );
 }

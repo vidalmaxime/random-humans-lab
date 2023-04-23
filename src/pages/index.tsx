@@ -1,23 +1,28 @@
-import Link from "next/link";
-
 import TestExperiment from "@/components/TestExperiment";
 import TestThree from "@/components/TestThree";
 
 export default function Home() {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
+      className={`flex min-h-screen flex-col items-center p-4 bg-green-100`}
     >
-      <h1 className="title">
-        <Link href="/about">About</Link>
-      </h1>
+
       <div className="flex items-center justify-center">
         <div className="mr-16">
-          <TestThree />
+          <img src="/rhl-logo.svg" alt="Random Humans Lab Logo" className="w-24" />
+
         </div>
-        <h1 className="text text-5xl">Random Humans Lab</h1>
+
+        <h1 className="text text-9xl text-black">random humans lab</h1>
       </div>
-      <TestExperiment name="Hello" />
+      <TestExperiment name="Experiment One" />
+
+      {/* This footer is at the bottom of the screen */}
+      <footer className="mt-auto">
+        <h1 className="text-black">
+          made with curiosity by aurélien and maxime
+        </h1>
+      </footer>
     </main>
   );
 }
