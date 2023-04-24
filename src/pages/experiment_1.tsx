@@ -63,28 +63,27 @@ export default function Experiment1() {
     };
   }, []);
 
-  function sendAnswer(value: number, numberFactors: number) {
+  async function sendAnswer(value: number, numberFactors: number) {
     const user = auth.currentUser;
     if (user) {
+      // Add to general doc containing array of all answers using arrayUnion
+      const generalDocRef = doc(db, "experiment_1", "general");
+      const document = await getDoc(generalDocRef);
+
+      if (document.exists()) {
+        await updateDoc(generalDocRef, {
+          answers: arrayUnion(value),
+          numberFactors: arrayUnion(numberFactors),
+        });
+      } else {
+        await setDoc(generalDocRef, {
+          answers: [value],
+          numberFactors: [numberFactors],
+        });
+      }
       // Create doc with user uid
       const docRef = doc(db, "experiment_1", user.uid);
       setDoc(docRef, { answer: value, numberFactors: numberFactors });
-
-      // Add to general doc containing array of all answers using arrayUnion
-      const generalDocRef = doc(db, "experiment_1", "general");
-      getDoc(generalDocRef).then((doc) => {
-        if (doc.exists()) {
-          updateDoc(generalDocRef, {
-            answers: arrayUnion(value),
-            numberFactors: arrayUnion(numberFactors),
-          });
-        } else {
-          setDoc(generalDocRef, {
-            answers: [value],
-            numberFactors: [numberFactors],
-          });
-        }
-      });
     }
   }
 

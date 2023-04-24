@@ -37,8 +37,6 @@ export default function VizResults() {
             }
             return acc;
           }, []);
-          console.log(occurrences);
-
           setPrimeFactors(occurrences);
         }
       });
