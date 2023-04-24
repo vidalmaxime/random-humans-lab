@@ -63,12 +63,12 @@ export default function Experiment1() {
     };
   }, []);
 
-  function sendAnswer(value: number) {
+  function sendAnswer(value: number, numberFactors: number) {
     const user = auth.currentUser;
     if (user) {
       // Create doc with user uid
       const docRef = doc(db, "experiment_1", user.uid);
-      setDoc(docRef, { answer: value });
+      setDoc(docRef, { answer: value, numberFactors: numberFactors });
 
       // Add to general doc containing array of all answers using arrayUnion
       const generalDocRef = doc(db, "experiment_1", "general");
@@ -76,9 +76,13 @@ export default function Experiment1() {
         if (doc.exists()) {
           updateDoc(generalDocRef, {
             answers: arrayUnion(value),
+            numberFactors: arrayUnion(numberFactors),
           });
         } else {
-          setDoc(generalDocRef, { answers: [value] });
+          setDoc(generalDocRef, {
+            answers: [value],
+            numberFactors: [numberFactors],
+          });
         }
       });
     }
