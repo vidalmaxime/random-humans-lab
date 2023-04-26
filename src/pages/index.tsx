@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { signInAnonymously } from "firebase/auth";
+import Head from 'next/head'
+import Image from "next/image";
 
 import ExperimentTile from "@/components/ExperimentTile";
 import Footer from "@/components/Footer";
@@ -14,12 +16,16 @@ export default function Home() {
     <main
       className={`flex min-h-screen flex-col items-center p-4 bg-green-100`}
     >
+      <Head>
+        <title>random humans lab</title>
+      </Head>
       <div className="flex items-center justify-center">
         <div className="mr-16">
-          <img
+          <Image
             src="/rhl-logo.svg"
             alt="Random Humans Lab Logo"
-            className="w-24"
+            width={100}
+            height={100}
           />
         </div>
 

@@ -10,6 +10,8 @@ import {
 } from "firebase/firestore";
 
 import { auth, db } from "../../firebase";
+import Image from "next/image";
+
 import Footer from "@/components/Footer";
 import VizQuestion from "@/components/experimentOne/VizQuestion";
 import VizResults from "@/components/experimentOne/VizResults";
@@ -38,7 +40,7 @@ export default function Experiment1() {
 
   // Set the listener for answer existence
   useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe = () => { };
     const user = auth.currentUser;
     if (user) {
       unsubscribe = onSnapshot(doc(db, "experiment_1", user.uid), (doc) => {
@@ -93,10 +95,11 @@ export default function Experiment1() {
     >
       <div className="flex items-center justify-center">
         <div className="mr-16">
-          <img
+          <Image
             src="/rhl-logo.svg"
             alt="Random Humans Lab Logo"
-            className="w-36"
+            width={100}
+            height={100}
           />
         </div>
 
