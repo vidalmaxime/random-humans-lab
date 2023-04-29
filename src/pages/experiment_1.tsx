@@ -73,9 +73,14 @@ export default function Experiment1() {
       const document = await getDoc(generalDocRef);
 
       if (document.exists()) {
+        // Update both answers and numberFactors by storing a temp array
+        const tempAnswers = document.data()?.answers;
+        tempAnswers.push(value);
+        const tempNumberFactors = document.data()?.numberFactors;
+        tempNumberFactors.push(numberFactors);
         await updateDoc(generalDocRef, {
-          answers: arrayUnion(value),
-          numberFactors: arrayUnion(numberFactors),
+          answers: tempAnswers,
+          numberFactors: tempNumberFactors,
         });
       } else {
         await setDoc(generalDocRef, {
