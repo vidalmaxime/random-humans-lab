@@ -1,10 +1,10 @@
-import type { AppProps } from 'next/app'
-import { Space_Grotesk } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/react';
-import '@/styles/globals.css'
+import type { AppProps } from "next/app";
+import { Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import "@/styles/globals.css";
 
 const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
+  subsets: ["latin"],
 });
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -12,14 +12,13 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <style jsx global>
         {`
-      :root {
-        --space-grotesk-font: ${spaceGrotesk.style.fontFamily};
-      }
-    `}
+          :root {
+            --space-grotesk-font: ${spaceGrotesk.style.fontFamily};
+          }
+        `}
       </style>
       <Component {...pageProps} />
       <Analytics />
     </>
-
   );
 }

@@ -10,17 +10,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function BarPrimeFactors({ occurrences }: BarPrimeFactorsProps) {
+export default function BarFreq({ frequencies, title }: BarFreqProps) {
   return (
     <div className="mt-16 flex flex-col items-center">
-      <h1 className="text font-bold">
-        Repartition of number of prime factors if number given was an integer
-      </h1>
+      <h1 className="text font-bold">{title}</h1>
       <ResponsiveContainer width={500} height={300}>
         <BarChart
           width={500}
           height={300}
-          data={occurrences}
+          data={frequencies}
           margin={{
             top: 5,
             right: 30,
@@ -32,14 +30,19 @@ export default function BarPrimeFactors({ occurrences }: BarPrimeFactorsProps) {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Bar dataKey="frequency" fill="#8884d8" />
+          <Bar
+            dataKey="frequency"
+            fill="#FFFFFF"
+            stroke="#000000"
+            strokeWidth={1}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 }
 
-type BarPrimeFactorsProps = {
-  occurrences: Object[];
+type BarFreqProps = {
+  frequencies: Object[];
+  title: string;
 };

@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { signInAnonymously } from "firebase/auth";
-import {
-  doc,
-  onSnapshot,
-  setDoc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-} from "firebase/firestore";
+import Head from "next/head";
+import { doc, onSnapshot, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { auth, db } from "../../firebase";
 import Image from "next/image";
@@ -40,7 +34,7 @@ export default function Experiment1() {
 
   // Set the listener for answer existence
   useEffect(() => {
-    let unsubscribe = () => { };
+    let unsubscribe = () => {};
     const user = auth.currentUser;
     if (user) {
       unsubscribe = onSnapshot(doc(db, "experiment_1", user.uid), (doc) => {
@@ -98,6 +92,9 @@ export default function Experiment1() {
     <main
       className={`flex min-h-screen flex-col items-center p-4 bg-green-100`}
     >
+      <Head>
+        <title>random humans lab</title>
+      </Head>
       <div className="flex items-center justify-center">
         <div className="mr-16">
           <Image
