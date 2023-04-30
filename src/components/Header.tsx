@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
+import { motion } from "framer-motion";
 
 export default function Header({ title }: HeaderProps) {
   return (
@@ -9,7 +10,11 @@ export default function Header({ title }: HeaderProps) {
       <Head>
         <title>{title}</title>
       </Head>
-      <div>
+      <motion.div
+        whileHover={{
+          scale: 1.1,
+        }}
+      >
         <Link href="/">
           <Image
             src="/rhl-logo.svg"
@@ -18,7 +23,7 @@ export default function Header({ title }: HeaderProps) {
             height={100}
           />
         </Link>
-      </div>
+      </motion.div>
       <h1 className="text-black text-2xl md:text-5xl  ml-8 w-2/3">{title}</h1>
     </div>
   );

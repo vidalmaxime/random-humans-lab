@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
+import { useAnimate, motion, AnimatePresence } from "framer-motion";
 
 import { auth, db } from "../../../firebase";
 import BarFreq from "./BarFreq";
+import DensityLog from "./DensityLog";
 
 const maxNumBars = 10;
 
@@ -14,8 +16,16 @@ export default function VizResults() {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [totalPicks, setTotalPicks] = useState(0);
+  const [histogramPoints, setHistogramPoints] = useState([]);
+
+  const [scope, animate] = useAnimate();
 
   const toggleCollapse = () => {
+    animate(
+      scope.current,
+      { rotate: isCollapsed ? [0, 60] : [60, 0] },
+      { duration: 0.3 }
+    );
     setIsCollapsed(!isCollapsed);
   };
 
@@ -54,6 +64,7 @@ export default function VizResults() {
               );
               setUserAnswerCount(countByName);
               setTotalPicks(count);
+              setHistogramPoints(computeHistogram(values, 10));
             }
           });
         }
@@ -101,10 +112,38 @@ export default function VizResults() {
     return [occurrences, count];
   };
 
+  const computeHistogram = (values: any, maxNum: number) => {
+    // Create logaritmic bins
+    const bins: any = [];
+    for (let i = 0; i < maxNum; i++) {
+      bins.push(Math.pow(10, i));
+    }
+    bins.push(Infinity);
+    // Compute the histogram knowing that values is a simple array of numbers
+    const histogram = values.reduce((acc: any, curr: any) => {
+      const index = bins.findIndex((bin: any) => curr < bin);
+      if (index === -1) {
+        acc[acc.length - 1] += 1;
+      } else {
+        acc[index] += 1;
+      }
+      return acc;
+    }, new Array(bins.length).fill(0));
+    // Normalize the histogram
+    const total = histogram.reduce((acc: any, curr: any) => acc + curr, 0);
+    const normalizedHistogram = histogram.map((bin: any) => bin / total);
+    // Make it as an array of objects with the bin and the count
+    const histogramPoints = normalizedHistogram.map((bin: any, index: any) => {
+      return { bin: bins[index], count: bin };
+    });
+
+    return histogramPoints;
+  };
+
   return (
-    <div className="text-black flex flex-col items-center w-full">
+    <div className="text-black flex flex-col items-center w-full mb-32">
       <h1 className="mb-4 text-xl">
-        You picked {userAnswer},{" "}
+        you picked {userAnswer},{" "}
         {userAnswerCount === 1
           ? `it’s the first time this number has been chosen out of
             ${totalPicks}
@@ -118,35 +157,42 @@ export default function VizResults() {
 
       <BarFreq
         frequencies={valuesOccurrences}
-        title={`Occurences of Top ${maxNumBars} most frequent numbers`}
+        title={`occurences of top ${maxNumBars} most frequent numbers`}
         yDataKey="count"
       />
 
-      {/* Create a horizontal flex box for the following two components */}
-      <div
-        className="mt-16 cursor-pointer flex flex-row "
+      <motion.div
+        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
         onClick={toggleCollapse}
+        whileHover={{ opacity: 1 }}
       >
         <h2 className=" text-lg text-green-500">
-          Click here for other data visualizations
+          click here for other data visualizations
         </h2>
-        <Image
-          src="/chevron-down.svg"
-          alt="chevron"
-          width={16}
-          height={16}
-          className={`${isCollapsed ? "" : "rotate-180"} ml-2`}
-        />
-      </div>
-      {!isCollapsed && (
-        <div className={" flex flex-col items-center  w-full"}>
-          <BarFreq
-            frequencies={primeFactorsFrequencies}
-            title={`Repartition of Top ${maxNumBars} most frequent number of prime factors if number is integer`}
-            yDataKey="frequency"
-          />
+        <div className="ml-2" ref={scope}>
+          <Image src="/chevron-down.svg" alt="chevron" width={16} height={16} />
         </div>
-      )}
+      </motion.div>
+      <AnimatePresence>
+        {!isCollapsed && (
+          <motion.div
+            className={"flex flex-col items-center w-full"}
+            initial={{ y: -70 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <BarFreq
+              frequencies={primeFactorsFrequencies}
+              title={`repartition of top ${maxNumBars} most frequent number of prime factors if number is integer`}
+              yDataKey="frequency"
+            />
+            <DensityLog
+              points={histogramPoints}
+              title="repartition of numbers in log scale"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

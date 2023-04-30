@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function VizQuestion({ send }: VizQuestionProps) {
   const [number, setNumber] = useState(null);
@@ -41,12 +42,19 @@ export default function VizQuestion({ send }: VizQuestionProps) {
     if (!number) return;
     if (matchExact(/(?=.)([+-]?([0-9]*)(\.([0-9]+))?)$/, number)) {
       const parsedNumber = parseFloat(number);
-      let numberFactors = 0;
-      if (Number.isInteger(parsedNumber) && parsedNumber > 0) {
-        numberFactors = primeFactors(parsedNumber).length;
+      if (number > 0) {
+        let numberFactors = 0;
+        if (Number.isInteger(parsedNumber) && parsedNumber > 0) {
+          numberFactors = primeFactors(parsedNumber).length;
+        }
+        send(parsedNumber, numberFactors);
+        setSubmitted(true);
+      } else {
+        setWarningGiveNumber(true);
+        setTimeout(() => {
+          setWarningGiveNumber(false);
+        }, 2000);
       }
-      send(parsedNumber, numberFactors);
-      setSubmitted(true);
     } else {
       setWarningGiveNumber(true);
       setTimeout(() => {
@@ -56,22 +64,38 @@ export default function VizQuestion({ send }: VizQuestionProps) {
   };
 
   return (
-    <div className="flex justify-center">
-      <input
-        type="text"
-        placeholder="Enter a number between 0 and infinity"
-        className="border-2 border-black rounded-md p-2 w-96 text-black"
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-      />
-      <button
-        className="bg-black text-white rounded-md p-2 ml-2"
-        onClick={handleSubmit}
-      >
-        Submit
-      </button>
+    <div className="flex justify-center flex-col items-center">
+      <p className="text-black mb-8">
+        This experiment is heavily inspired by David Chalmers' original{" "}
+        <a
+          target="_blank"
+          href="https://consc.net/notes/pick-a-number.html"
+          className="text-green-500"
+        >
+          experiment
+        </a>
+        .
+      </p>
+      <div className="flex justify-center">
+        <input
+          type="text"
+          placeholder="Enter a number between 0 and infinity"
+          className="border-2 border-black rounded-md p-2 w-96 text-black"
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+        <motion.button
+          className="bg-black text-white rounded-md p-2 ml-2"
+          onClick={handleSubmit}
+          whileHover={{
+            scale: 1.1,
+          }}
+        >
+          Submit
+        </motion.button>
+      </div>
       {warningGiveNumber && (
-        <p className="text-red-500 absolute">Please enter a valid number</p>
+        <p className="text-red-500">Please enter a valid number</p>
       )}
     </div>
   );
