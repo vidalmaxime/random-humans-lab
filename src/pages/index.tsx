@@ -18,7 +18,7 @@ export default function Home() {
       <Header title="random humans lab" />
 
       <div className="mt-16">
-        <ExperimentTile name="Experiment One" />
+        <ExperimentTile name="experiment 1" />
       </div>
 
       <Footer />
