@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { signInAnonymously } from "firebase/auth";
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import { doc, onSnapshot, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { auth, db } from "../../firebase";
-import Image from "next/image";
+
 
 import Footer from "@/components/Footer";
 import VizQuestion from "@/components/experimentOne/VizQuestion";
@@ -34,7 +36,7 @@ export default function Experiment1() {
 
   // Set the listener for answer existence
   useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe = () => { };
     const user = auth.currentUser;
     if (user) {
       unsubscribe = onSnapshot(doc(db, "experiment_1", user.uid), (doc) => {
@@ -95,23 +97,26 @@ export default function Experiment1() {
       <Head>
         <title>random humans lab</title>
       </Head>
-      <div className="flex items-center justify-center">
-        <div className="mr-16">
-          <Image
-            src="/rhl-logo.svg"
-            alt="Random Humans Lab Logo"
-            width={100}
-            height={100}
-          />
-        </div>
 
-        <h1 className="text text-6xl text-black">
+      <div className="flex items-center justify-center">
+        <div className="w-1/2 lg:w-auto mb-8 md:mb-0">
+          <Link href="/">
+            <Image
+              src="/rhl-logo.svg"
+              alt="Random Humans Lab Logo"
+              width={100}
+              height={100}
+            />
+          </Link>
+        </div>
+        <h1 className="text-5xl md:text-6xl lg:text-6xl text-black  ml-8">
           Pick a number between 0 and infinity
         </h1>
       </div>
 
+
       {!loadingVerification && (
-        <div className="mt-16">
+        <div className="mt-16 w-full">
           {userAlreadyAnswered ? (
             <VizResults />
           ) : (
@@ -120,7 +125,6 @@ export default function Experiment1() {
         </div>
       )}
 
-      <Footer />
     </main>
   );
 }

@@ -10,14 +10,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function BarFreq({ frequencies, title }: BarFreqProps) {
+export default function BarFreq({ frequencies, title, yDataKey }: BarFreqProps) {
   return (
-    <div className="mt-16 flex flex-col items-center">
+    <div className="mt-16 flex flex-col items-center w-full">
       <h1 className="text font-bold">{title}</h1>
-      <ResponsiveContainer width={500} height={300}>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          width={500}
-          height={300}
           data={frequencies}
           margin={{
             top: 5,
@@ -29,12 +27,12 @@ export default function BarFreq({ frequencies, title }: BarFreqProps) {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
           <Bar
-            dataKey="frequency"
+            dataKey={yDataKey}
             fill="#FFFFFF"
             stroke="#000000"
             strokeWidth={1}
+            label={false}
           />
         </BarChart>
       </ResponsiveContainer>
@@ -45,4 +43,5 @@ export default function BarFreq({ frequencies, title }: BarFreqProps) {
 type BarFreqProps = {
   frequencies: Object[];
   title: string;
+  yDataKey: string;
 };
