@@ -56,7 +56,7 @@ export default function VizQuestion({ send }: VizQuestionProps) {
   };
 
   return (
-    <div>
+    <div className="flex justify-center">
       <input
         type="text"
         placeholder="Enter a number between 0 and infinity"

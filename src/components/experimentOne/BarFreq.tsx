@@ -10,10 +10,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function BarFreq({ frequencies, title, yDataKey }: BarFreqProps) {
+export default function BarFreq({
+  frequencies,
+  title,
+  yDataKey,
+}: BarFreqProps) {
   return (
     <div className="mt-16 flex flex-col items-center w-full">
-      <h1 className="text font-bold">{title}</h1>
+      <h1 className="text font-bold mb-4">{title}</h1>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={frequencies}

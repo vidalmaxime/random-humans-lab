@@ -11,7 +11,7 @@ export default function VizResults() {
   const [userAnswer, setUserAnswer] = useState("");
   const [primeFactorsFrequencies, setPrimeFactorsFrequencies] = useState([]);
   const [valuesOccurrences, setValuesOccurrences] = useState([]);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [totalPicks, setTotalPicks] = useState(0);
 
@@ -25,35 +25,37 @@ export default function VizResults() {
         return arr[i].count;
       }
     }
-    return null; // return null if the query name is not found in the array
+    return null;
   }
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (user) {
-      const docRef = doc(db, "experiment_1", user.uid);
-      getDoc(docRef).then((doc) => {
-        if (doc.exists()) {
-          setUserAnswer(doc.data().answer);
-        }
-      });
-    }
-  }, []);
 
   useEffect(() => {
+    // We chain retrieving of user answer and general data
     const user = auth.currentUser;
     if (user) {
-      const docRef = doc(db, "experiment_1", "general");
-      getDoc(docRef).then((doc) => {
-        if (doc.exists()) {
-          const primeFactors = doc.data().numberFactors;
-          const values = doc.data().answers;
-          const [primeFactorsFreq, count] = computeFrequency(primeFactors, maxNumBars);
-          setPrimeFactorsFrequencies(primeFactorsFreq);
-          const valuesOcc = getOccurrences(values, maxNumBars);
-          setValuesOccurrences(valuesOcc);
-          const countByName = getCountByName(valuesOcc, userAnswer);
-          setUserAnswerCount(countByName);
-          setTotalPicks(count);
+      const userdocRef = doc(db, "experiment_1", user.uid);
+      getDoc(userdocRef).then((userDoc) => {
+        if (userDoc.exists()) {
+          setUserAnswer(userDoc.data().answer);
+          const docRef = doc(db, "experiment_1", "general");
+          getDoc(docRef).then((doc) => {
+            if (doc.exists()) {
+              const primeFactors = doc.data().numberFactors;
+              const values = doc.data().answers;
+              const [primeFactorsFreq, count] = computeFrequency(
+                primeFactors,
+                maxNumBars
+              );
+              setPrimeFactorsFrequencies(primeFactorsFreq);
+              const valuesOcc = getOccurrences(values, maxNumBars);
+              setValuesOccurrences(valuesOcc);
+              const countByName = getCountByName(
+                valuesOcc,
+                userDoc.data().answer
+              );
+              setUserAnswerCount(countByName);
+              setTotalPicks(count);
+            }
+          });
         }
       });
     }
@@ -101,8 +103,18 @@ export default function VizResults() {
 
   return (
     <div className="text-black flex flex-col items-center w-full">
-      <h1 className="mb-4 text-xl">You picked {userAnswer},  {userAnswerCount === 1 ? "it’s the first time this number has been chosen out of " + { totalPicks } + " picks" : "this number has been chosen" + { userAnswerCount } + "times out of " + { totalPicks } + " picks"}</h1>
-
+      <h1 className="mb-4 text-xl">
+        You picked {userAnswer},{" "}
+        {userAnswerCount === 1
+          ? `it’s the first time this number has been chosen out of
+            ${totalPicks}
+             picks`
+          : `this number has been chosen 
+            ${userAnswerCount} 
+            times out of
+            ${totalPicks} 
+            picks`}
+      </h1>
 
       <BarFreq
         frequencies={valuesOccurrences}
@@ -110,21 +122,31 @@ export default function VizResults() {
         yDataKey="count"
       />
 
-
       {/* Create a horizontal flex box for the following two components */}
-      <div className="mt-16 cursor-pointer flex flex-row " onClick={toggleCollapse}>
-        <h2 className=" text-lg text-green-500" >Click here for other data visualizations</h2>
-        <Image src="/chevron-down.svg" alt="chevron" width={16} height={16} className={`${isCollapsed ? '' : 'rotate-180'} ml-2`} />
-      </div>
-
-      <div className={`${isCollapsed ? 'hidden' : 'block'}  flex flex-col items-center  w-full`}>
-
-        <BarFreq
-          frequencies={primeFactorsFrequencies}
-          title={`Repartition of the ${maxNumBars} most frequent number of prime factors if number is integer`}
-          yDataKey="frequency"
+      <div
+        className="mt-16 cursor-pointer flex flex-row "
+        onClick={toggleCollapse}
+      >
+        <h2 className=" text-lg text-green-500">
+          Click here for other data visualizations
+        </h2>
+        <Image
+          src="/chevron-down.svg"
+          alt="chevron"
+          width={16}
+          height={16}
+          className={`${isCollapsed ? "" : "rotate-180"} ml-2`}
         />
       </div>
-    </div >
+      {!isCollapsed && (
+        <div className={" flex flex-col items-center  w-full"}>
+          <BarFreq
+            frequencies={primeFactorsFrequencies}
+            title={`Repartition of Top ${maxNumBars} most frequent number of prime factors if number is integer`}
+            yDataKey="frequency"
+          />
+        </div>
+      )}
+    </div>
   );
 }
