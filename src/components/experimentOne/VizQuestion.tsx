@@ -66,7 +66,7 @@ export default function VizQuestion({ send }: VizQuestionProps) {
   return (
     <div className="flex justify-center flex-col items-center">
       <p className="text-black mb-8">
-        This experiment is heavily inspired by David Chalmers' original{" "}
+        This experiment is heavily inspired by David Chalmers&apos; original{" "}
         <a
           target="_blank"
           href="https://consc.net/notes/pick-a-number.html"
