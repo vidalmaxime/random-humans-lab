@@ -56,12 +56,13 @@ export default function VizResults() {
                 maxNumBars
               );
               setPrimeFactorsFrequencies(primeFactorsFreq);
-              const valuesOcc = getOccurrences(values, maxNumBars);
+              const valuesOcc = getOccurrences(values);
               setValuesOccurrences(valuesOcc);
               const countByName = getCountByName(
                 valuesOcc,
                 userDoc.data().answer
               );
+              valuesOcc.splice(maxNumBars);
               setUserAnswerCount(countByName);
               setTotalPicks(count);
               setHistogramPoints(computeHistogram(values, 10));
@@ -72,7 +73,7 @@ export default function VizResults() {
     }
   }, []);
 
-  const getOccurrences = (values: any, maxNum: number) => {
+  const getOccurrences = (values: any) => {
     const occurrences = values.reduce((acc: any, curr: any) => {
       const index = acc.findIndex((obj: any) => obj.name === curr);
       if (index === -1) {
@@ -83,8 +84,7 @@ export default function VizResults() {
       return acc;
     }, []);
     occurrences.sort((a: any, b: any) => b.count - a.count);
-    // Keep only the most frequent values
-    occurrences.splice(maxNum);
+
     return occurrences;
   };
 
