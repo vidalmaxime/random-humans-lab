@@ -183,12 +183,12 @@ export default function VizResults() {
           >
             <BarFreq
               frequencies={primeFactorsFrequencies}
-              title={`repartition of top ${maxNumBars} most frequent number of prime factors if number is integer`}
+              title={`distribution of top ${maxNumBars} most frequent number of prime factors if number is integer`}
               yDataKey="frequency"
             />
             <DensityLog
               points={histogramPoints}
-              title="repartition of numbers in log scale"
+              title="distribution of numbers in log scale"
             />
           </motion.div>
         )}
