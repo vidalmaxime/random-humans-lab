@@ -161,6 +161,18 @@ export default function VizResults() {
         yDataKey="count"
       />
 
+      <p className="text-black mb-2 mt-4">
+        This experiment is heavily inspired by David Chalmers&apos; original{" "}
+        <a
+          target="_blank"
+          href="https://consc.net/notes/pick-a-number.html"
+          className="text-green-500"
+        >
+          experiment
+        </a>
+        .
+      </p>
+
       <motion.div
         className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
         onClick={toggleCollapse}
@@ -181,14 +193,14 @@ export default function VizResults() {
             animate={{ y: 0 }}
             transition={{ duration: 0.4 }}
           >
+            <DensityLog
+              points={histogramPoints}
+              title="distribution of numbers in log scale"
+            />
             <BarFreq
               frequencies={primeFactorsFrequencies}
               title={`distribution of top ${maxNumBars} most frequent number of prime factors if number is integer`}
               yDataKey="frequency"
-            />
-            <DensityLog
-              points={histogramPoints}
-              title="distribution of numbers in log scale"
             />
           </motion.div>
         )}
