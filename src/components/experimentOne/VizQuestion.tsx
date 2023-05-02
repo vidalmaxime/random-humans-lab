@@ -72,7 +72,7 @@ export default function VizQuestion({
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <div className="flex justify-center">
+      <div className="flex justify-center flex-wrap items-center">
         <input
           type="text"
           placeholder="Enter a number between 0 and infinity"
@@ -82,7 +82,7 @@ export default function VizQuestion({
           autoFocus={true}
         />
         <motion.button
-          className="bg-black text-white rounded-md p-2 ml-2"
+          className="bg-black text-white rounded-md p-2 ml-2 my-2"
           onClick={handleSubmit}
           whileHover={{
             scale: 1.1,
