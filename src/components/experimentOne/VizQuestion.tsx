@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function VizQuestion({ send }: VizQuestionProps) {
+export default function VizQuestion({
+  send,
+  setUserSkippedToResults,
+}: VizQuestionProps) {
   const [number, setNumber] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [warningGiveNumber, setWarningGiveNumber] = useState(false);
@@ -63,6 +66,10 @@ export default function VizQuestion({ send }: VizQuestionProps) {
     }
   };
 
+  const skipToResults = () => {
+    setUserSkippedToResults(true);
+  };
+
   return (
     <div className="flex justify-center flex-col items-center">
       <div className="flex justify-center">
@@ -72,6 +79,7 @@ export default function VizQuestion({ send }: VizQuestionProps) {
           className="border-2 border-black rounded-md p-2 w-96 text-black"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          autoFocus={true}
         />
         <motion.button
           className="bg-black text-white rounded-md p-2 ml-2"
@@ -86,10 +94,18 @@ export default function VizQuestion({ send }: VizQuestionProps) {
       {warningGiveNumber && (
         <p className="text-red-500">Please enter a valid number</p>
       )}
+      <motion.div
+        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
+        onClick={skipToResults}
+        whileHover={{ opacity: 1 }}
+      >
+        <h2 className="text-lg text-green-500">skip to results</h2>
+      </motion.div>
     </div>
   );
 }
 
 type VizQuestionProps = {
   send: (number: number, numberFactors: number) => void;
+  setUserSkippedToResults: (skipped: boolean) => void;
 };

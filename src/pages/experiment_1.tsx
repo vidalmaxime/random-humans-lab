@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 
 export default function Experiment1() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
+  const [userSkippedToResults, setUserSkippedToResults] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
 
   const checkIfUserAlreadyAnswered = async () => {
@@ -92,10 +93,13 @@ export default function Experiment1() {
 
       {!loadingVerification && (
         <div className="mt-16 w-full">
-          {userAlreadyAnswered ? (
+          {userAlreadyAnswered || userSkippedToResults ? (
             <VizResults />
           ) : (
-            <VizQuestion send={sendAnswer} />
+            <VizQuestion
+              send={sendAnswer}
+              setUserSkippedToResults={setUserSkippedToResults}
+            />
           )}
         </div>
       )}

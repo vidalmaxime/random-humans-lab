@@ -46,29 +46,31 @@ export default function VizResults() {
       getDoc(userdocRef).then((userDoc) => {
         if (userDoc.exists()) {
           setUserAnswer(userDoc.data().answer);
-          const docRef = doc(db, "experiment_1", "general");
-          getDoc(docRef).then((doc) => {
-            if (doc.exists()) {
-              const primeFactors = doc.data().numberFactors;
-              const values = doc.data().answers;
-              const [primeFactorsFreq, count] = computeFrequency(
-                primeFactors,
-                maxNumBars
-              );
-              setPrimeFactorsFrequencies(primeFactorsFreq);
-              const valuesOcc = getOccurrences(values);
-              setValuesOccurrences(valuesOcc);
+        }
+        const docRef = doc(db, "experiment_1", "general");
+        getDoc(docRef).then((doc) => {
+          if (doc.exists()) {
+            const primeFactors = doc.data().numberFactors;
+            const values = doc.data().answers;
+            const [primeFactorsFreq, count] = computeFrequency(
+              primeFactors,
+              maxNumBars
+            );
+            setPrimeFactorsFrequencies(primeFactorsFreq);
+            const valuesOcc = getOccurrences(values);
+            setValuesOccurrences(valuesOcc);
+            if (userDoc.exists()) {
               const countByName = getCountByName(
                 valuesOcc,
                 userDoc.data().answer
               );
-              valuesOcc.splice(maxNumBars);
               setUserAnswerCount(countByName);
-              setTotalPicks(count);
-              setHistogramPoints(computeHistogram(values, 10));
             }
-          });
-        }
+            valuesOcc.splice(maxNumBars);
+            setTotalPicks(count);
+            setHistogramPoints(computeHistogram(values, 10));
+          }
+        });
       });
     }
   }, []);
@@ -142,22 +144,28 @@ export default function VizResults() {
 
   return (
     <div className="text-black flex flex-col items-center w-full mb-32">
-      <h1 className="mb-4 text-xl">
-        you picked {userAnswer},{" "}
-        {userAnswerCount === 1
-          ? `it’s the first time this number has been chosen out of
+      {userAnswer !== "" ? (
+        <h1 className="mb-4 text-xl">
+          you picked {userAnswer},{" "}
+          {userAnswerCount === 1
+            ? `it’s the first time this number has been chosen out of
             ${totalPicks}
              picks`
-          : `this number has been chosen 
+            : `this number has been chosen 
             ${userAnswerCount} 
             times out of
             ${totalPicks} 
             picks`}
-      </h1>
+        </h1>
+      ) : (
+        <h1 className="mb-4 text-xl">
+          there has been {totalPicks} total picks
+        </h1>
+      )}
 
       <BarFreq
         frequencies={valuesOccurrences}
-        title={`occurences of top ${maxNumBars} most frequent numbers`}
+        title={`occurences of top ${maxNumBars} most frequent picks`}
         yDataKey="count"
       />
 
@@ -195,11 +203,11 @@ export default function VizResults() {
           >
             <DensityLog
               points={histogramPoints}
-              title="distribution of numbers in log scale"
+              title="distribution of picks in log scale"
             />
             <BarFreq
               frequencies={primeFactorsFrequencies}
-              title={`distribution of top ${maxNumBars} most frequent number of prime factors if number is integer`}
+              title={`distribution of top ${maxNumBars} most frequent number of prime factors per pick`}
               yDataKey="frequency"
             />
           </motion.div>
