@@ -26,9 +26,10 @@ for (let i = 0; i < numberSectorsPerDim; i++) {
   }
 }
 
-export default function Heatmap({ positions, title }: HeatmapProps) {
+export default function Heatmap({ positions, title, userPos }: HeatmapProps) {
   const [heatSectors, setHeatSectors] = useState(sectors);
   const [processedPositions, setProcessedPositions] = useState([{}]);
+  const [processedUserPos, setProcessedUserPos] = useState({ x: 0, y: 0 });
   const [maxCount, setMaxCount] = useState(0);
 
   useEffect(() => {
@@ -38,6 +39,10 @@ export default function Heatmap({ positions, title }: HeatmapProps) {
       y: height - position.y * height,
     }));
     setProcessedPositions(tempPositions);
+    setProcessedUserPos({
+      x: userPos.x * width,
+      y: height - userPos.y * height,
+    });
 
     // Update the heat sectors with the number of positions in each and update maxCount
     const tempSectors = heatSectors;
@@ -85,7 +90,7 @@ export default function Heatmap({ positions, title }: HeatmapProps) {
                 y1={sector.y1}
                 y2={sector.y2}
                 fill="red"
-                fillOpacity={sector.count / maxCount}
+                fillOpacity={sector.count === 0 ? 0 : sector.count / maxCount}
                 stroke="white"
                 strokeOpacity={0}
               />
@@ -99,6 +104,14 @@ export default function Heatmap({ positions, title }: HeatmapProps) {
             shape={
               // A custom shape that is a circle with a radius of 2
               ({ cx, cy }) => <circle cx={cx} cy={cy} r={2} fill="black" />
+            }
+          />
+          <Scatter
+            name="User position"
+            data={[processedUserPos]}
+            shape={
+              // A custom shape that is a circle with a radius of 4
+              ({ cx, cy }) => <circle cx={cx} cy={cy} r={4} fill="blue" />
             }
           />
         </ScatterChart>
@@ -117,4 +130,5 @@ export default function Heatmap({ positions, title }: HeatmapProps) {
 type HeatmapProps = {
   positions: { x: number; y: number }[];
   title: string;
+  userPos: { x: number; y: number };
 };

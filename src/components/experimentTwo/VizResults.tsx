@@ -5,7 +5,7 @@ import { auth, db } from "../../../firebase";
 import Heatmap from "./Heatmap";
 
 export default function VizResults() {
-  const [userPositions, setUserPositions] = useState({});
+  const [userPositions, setUserPositions] = useState({ x: 0, y: 0 });
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,11 @@ export default function VizResults() {
 
   return (
     <div className="text-black flex flex-col items-center w-full mb-32">
-      <Heatmap positions={positions} title="General heatmap" />
+      <Heatmap
+        positions={positions}
+        title="General heatmap"
+        userPos={userPositions}
+      />
     </div>
   );
 }
