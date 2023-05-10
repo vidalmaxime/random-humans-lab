@@ -34,7 +34,11 @@ export default function Home() {
           workings that underlie our world.
         </p>
         <div className="mt-4 mb-4 md:mt-8">
-          <ExperimentTile name="experiment 1" />
+          <ExperimentTile name="experiment 1" path="/experiment-number" />
+          <ExperimentTile
+            name="experiment 2"
+            path="/experiment-click-anywhere"
+          />
         </div>
         <Footer />
       </main>
