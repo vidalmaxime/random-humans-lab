@@ -71,12 +71,12 @@ export default function VizQuestion({
   };
 
   return (
-    <div className="flex justify-center flex-col items-center">
-      <div className="flex justify-center flex-wrap items-center">
+    <div className="flex justify-center flex-col items-center w-full">
+      <div className="flex justify-center flex-wrap items-center w-full">
         <input
           type="text"
           placeholder="Enter a number between 0 and infinity"
-          className="border-2 border-black rounded-md p-2 w-96 text-black"
+          className="border-2 border-black rounded-md p-2 w-full md:w-96 text-black"
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           autoFocus={true}

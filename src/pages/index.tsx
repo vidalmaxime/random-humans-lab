@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
       <Header title="random humans lab" />
-      <p className="text-black w-3/5 text-justify">
+      <p className="text-black mt-4 w-3/5 text-justify">
         In the sprawling expanse of the cosmos, a set of physical rules governs
         the behavior of all things, from the smallest quark to the mightiest
         star. Even humanity, with all its complexity and nuance, finds itself
@@ -29,7 +29,7 @@ export default function Home() {
         fabric of the universe itself, shedding light upon the intricate
         workings that underlie our world.
       </p>
-      <div className="mt-16">
+      <div className="mt-4 mb-4 md:mt-16">
         <ExperimentTile name="experiment 1" />
       </div>
       <Footer />
