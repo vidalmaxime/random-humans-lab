@@ -24,7 +24,9 @@ export default function Header({ title }: HeaderProps) {
           />
         </Link>
       </motion.div>
-      <h1 className="text-black text-2xl md:text-5xl  ml-8 w-2/3">{title}</h1>
+      <h1 className="text-black text-3xl md:text-5xl  ml-8 w-1/3 md:w-2/3">
+        {title}
+      </h1>
     </div>
   );
 }
