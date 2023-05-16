@@ -10,7 +10,7 @@ import DensityLog from "./DensityLog";
 const maxNumBars = 10;
 
 export default function VizResults() {
-  const [userAnswer, setUserAnswer] = useState("");
+  const [userAnswer, setUserAnswer] = useState(-1);
   const [primeFactorsFrequencies, setPrimeFactorsFrequencies] = useState([]);
   const [valuesOccurrences, setValuesOccurrences] = useState([]);
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -45,6 +45,7 @@ export default function VizResults() {
       const userdocRef = doc(db, "experiment_1", user.uid);
       getDoc(userdocRef).then((userDoc) => {
         if (userDoc.exists()) {
+          console.log(userDoc.data().answer);
           setUserAnswer(userDoc.data().answer);
         }
         const docRef = doc(db, "experiment_1", "general");
@@ -94,12 +95,15 @@ export default function VizResults() {
     // Compute the frequency of each number in the array and store in array of objects
     let count = 0;
     const occurrences = values.reduce((acc: any, curr: any) => {
-      count += 1;
-      const index = acc.findIndex((obj: any) => obj.name === curr);
-      if (index === -1) {
-        acc.push({ name: curr, frequency: 1 });
-      } else {
-        acc[index].frequency += 1;
+      // Exclude value if it's equal to -1
+      if (curr !== -1) {
+        count += 1;
+        const index = acc.findIndex((obj: any) => obj.name === curr);
+        if (index === -1) {
+          acc.push({ name: curr, frequency: 1 });
+        } else {
+          acc[index].frequency += 1;
+        }
       }
       return acc;
     }, []);
@@ -144,7 +148,7 @@ export default function VizResults() {
 
   return (
     <div className="text-black flex flex-col items-center w-full mb-32">
-      {userAnswer !== "" ? (
+      {userAnswer !== -1 && userAnswer !== Infinity ? (
         <h1 className="mb-4 text-xl">
           you picked {userAnswer},{" "}
           {userAnswerCount === 1
@@ -156,6 +160,13 @@ export default function VizResults() {
             times out of
             ${totalPicks} 
             picks`}
+        </h1>
+      ) : userAnswer === Infinity ? (
+        <h1 className="mb-4 text-xl">
+          you overflowed into infinity,{" "}
+          {userAnswerCount === 1
+            ? `it’s the first time this happened out of ${totalPicks} picks`
+            : `this is the ${userAnswerCount}th time it happens out of ${totalPicks} picks`}
         </h1>
       ) : (
         <h1 className="mb-4 text-xl">
@@ -207,7 +218,7 @@ export default function VizResults() {
             />
             <BarFreq
               frequencies={primeFactorsFrequencies}
-              title={`distribution of top ${maxNumBars} most frequent number of prime factors per pick`}
+              title={`distribution of top ${maxNumBars} most frequent number of prime factors per pick for picks < 1000`}
               yDataKey="frequency"
             />
           </motion.div>
