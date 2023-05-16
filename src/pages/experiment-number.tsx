@@ -70,7 +70,9 @@ export default function Experiment1() {
         const tempAnswers = document.data()?.answers;
         tempAnswers.push(value);
         const tempNumberFactors = document.data()?.numberFactors;
-        tempNumberFactors.push(numberFactors);
+        if (numberFactors !== -1) {
+          tempNumberFactors.push(numberFactors);
+        }
         await updateDoc(generalDocRef, {
           answers: tempAnswers,
           numberFactors: tempNumberFactors,
@@ -78,7 +80,7 @@ export default function Experiment1() {
       } else {
         await setDoc(generalDocRef, {
           answers: [value],
-          numberFactors: [numberFactors],
+          numberFactors: numberFactors !== -1 ? [numberFactors] : [],
         });
       }
       // Create doc with user uid

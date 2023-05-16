@@ -43,15 +43,27 @@ export default function VizQuestion({
     if (submitted) return;
     e.preventDefault();
     if (!number) return;
+
+    if (number > Number.MAX_VALUE) {
+      send(Number.POSITIVE_INFINITY, -1);
+      setSubmitted(true);
+      return;
+    }
+
     if (matchExact(/(?=.)([+-]?([0-9]*)(\.([0-9]+))?)$/, number)) {
       const parsedNumber = parseFloat(number);
       if (number > 0) {
-        let numberFactors = 0;
-        if (Number.isInteger(parsedNumber) && parsedNumber > 0) {
-          numberFactors = primeFactors(parsedNumber).length;
+        if (number <= 1000) {
+          let numberFactors = 0;
+          if (Number.isInteger(parsedNumber) && parsedNumber > 0) {
+            numberFactors = primeFactors(parsedNumber).length;
+          }
+          send(parsedNumber, numberFactors);
+          setSubmitted(true);
+        } else {
+          send(parsedNumber, -1);
+          setSubmitted(true);
         }
-        send(parsedNumber, numberFactors);
-        setSubmitted(true);
       } else {
         setWarningGiveNumber(true);
         setTimeout(() => {
