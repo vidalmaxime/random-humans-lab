@@ -45,7 +45,6 @@ export default function VizResults() {
       const userdocRef = doc(db, "experiment_1", user.uid);
       getDoc(userdocRef).then((userDoc) => {
         if (userDoc.exists()) {
-          console.log(userDoc.data().answer);
           setUserAnswer(userDoc.data().answer);
         }
         const docRef = doc(db, "experiment_1", "general");

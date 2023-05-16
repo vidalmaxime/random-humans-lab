@@ -45,7 +45,6 @@ export default function VizQuestion({
     if (!number) return;
 
     if (number > Number.MAX_VALUE) {
-      console.log("bang");
       send(Number.POSITIVE_INFINITY, -1);
       setSubmitted(true);
       return;
