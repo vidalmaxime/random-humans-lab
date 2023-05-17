@@ -32,7 +32,7 @@ export default function VizResults() {
   }, []);
 
   return (
-    <div className="text-black flex flex-col items-center w-full mb-32">
+    <div className="text-black flex flex-col items-center w-full">
       <Heatmap
         positions={positions}
         title="General heatmap"
