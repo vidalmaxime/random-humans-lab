@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ReferenceArea, ScatterChart, Scatter, XAxis, YAxis } from "recharts";
 
-const aspectRatio = 1200 / 1792;
-const width = 300;
+const aspectRatio = 1;
+const width = 500;
 const height = width / aspectRatio;
 const numberSectorsPerDim = 10;
 
@@ -65,7 +65,7 @@ export default function Heatmap({ positions, title, userPos }: HeatmapProps) {
   }, [positions]);
 
   return (
-    <div className="mt-16 flex flex-col items-center w-full">
+    <div className=" flex flex-col items-center w-full">
       <h1 className="text font-bold mb-4">{title}</h1>
       <div className="relative">
         <ScatterChart
@@ -115,13 +115,6 @@ export default function Heatmap({ positions, title, userPos }: HeatmapProps) {
             }
           />
         </ScatterChart>
-        <img
-          src="/joconde.jpeg"
-          alt="joconde"
-          width={width}
-          height={height}
-          className="absolute opacity-50 top-0"
-        />
       </div>
     </div>
   );
