@@ -85,10 +85,10 @@ export default function Experiment1() {
 
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
-      <Header title="Where do you want to click ?" />
+      <Header title="click somewhere" />
 
       {!loadingVerification && (
-        <div className="mt-16 w-full">
+        <div className="mt-8 md:mt-0 w-full">
           {userAlreadyAnswered || userSkippedToResults ? (
             <VizResults />
           ) : (
