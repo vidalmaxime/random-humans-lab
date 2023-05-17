@@ -11,9 +11,6 @@ export default function VizQuestion({
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <p className="text-black mb-8">
-        Think for 10 seconds and click somewhere on the picture
-      </p>
       <img
         src="/joconde.jpeg"
         alt="joconde"
@@ -28,7 +25,7 @@ export default function VizQuestion({
         }}
       />
       <motion.div
-        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
+        className="mt-4 cursor-pointer flex flex-row items-center opacity-70"
         onClick={skipToResults}
         whileHover={{ opacity: 1 }}
       >

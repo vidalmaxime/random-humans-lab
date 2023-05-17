@@ -33,12 +33,9 @@ export default function Home() {
           very fabric of the universe itself, shedding light upon the intricate
           workings that underlie our world.
         </p>
-        <div className="mt-4 mb-4 md:mt-8">
+        <div className="mt-4 mb-4 md:mt-16 flex flex-col items-start">
           <ExperimentTile name="experiment 1" path="/experiment-number" />
-          <ExperimentTile
-            name="experiment 2"
-            path="/experiment-click-anywhere"
-          />
+          <ExperimentTile name="experiment 2" path="/experiment-click" />
         </div>
         <Footer />
       </main>
