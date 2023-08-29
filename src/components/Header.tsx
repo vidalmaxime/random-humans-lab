@@ -4,7 +4,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { motion } from "framer-motion";
 
-export default function Header({ title }: { title?: string }) {
+export default function Header({ title }: { title: string }) {
   return (
     <div className="flex w-full">
       <Head>
@@ -24,15 +24,22 @@ export default function Header({ title }: { title?: string }) {
           />
         </Link>
       </motion.div>
-      {title ? (
-        <h1 className="text-black text-3xl md:text-5xl  ml-8 w-1/3 md:w-2/3 ">
-          {title}{" "}
-        </h1>
-      ) : (
-        <h1 className="text-black text-3xl md:text-5xl  ml-8 w-1/3 md:w-2/3 ">
-          random <span className="text-white">humans</span> lab
-        </h1>
-      )}
+      <h1 className="text-3xl md:text-5xl ml-8 w-1/3 md:w-2/3">
+        {title.split(" ").map((word, index) => (
+          <span
+            key={index}
+            className={`text-${
+              Math.random() < 0.5 ? "white" : "black"
+            } bg-gradient-to-r ${
+              Math.random() < 0.5
+                ? "from-black to-white"
+                : "from-white to-black"
+            } bg-clip-text`}
+          >
+            {word}{" "}
+          </span>
+        ))}
+      </h1>
     </div>
   );
 }

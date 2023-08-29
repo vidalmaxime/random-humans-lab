@@ -1,9 +1,8 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 export default function VizQuestion({ send }: VizQuestionProps) {
   return (
-    <div className="flex justify-center flex-col items-center">
+    <div className="flex justify-center flex-col items-center ">
       click
       <svg
         className="md:w-96 w-full cursor-pointer"
