@@ -59,6 +59,7 @@ export default function BarFreq({
           <Bar
             dataKey={yDataKey}
             fill="#FFFFFF"
+            fillOpacity={0.6}
             stroke="#000000"
             strokeWidth={1}
             label={false}
