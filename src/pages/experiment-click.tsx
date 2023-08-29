@@ -92,10 +92,7 @@ export default function Experiment1() {
           {userAlreadyAnswered || userSkippedToResults ? (
             <VizResults />
           ) : (
-            <VizQuestion
-              send={sendAnswer}
-              setUserSkippedToResults={setUserSkippedToResults}
-            />
+            <VizQuestion send={sendAnswer} />
           )}
         </div>
       )}

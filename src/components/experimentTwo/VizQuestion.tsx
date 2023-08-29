@@ -1,16 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-export default function VizQuestion({
-  send,
-  setUserSkippedToResults,
-}: VizQuestionProps) {
-  const skipToResults = () => {
-    setUserSkippedToResults(true);
-  };
-
+export default function VizQuestion({ send }: VizQuestionProps) {
   return (
     <div className="flex justify-center flex-col items-center">
+      click
       <svg
         className="md:w-96 w-full cursor-pointer"
         viewBox="0 0 100 100"
@@ -38,19 +32,15 @@ export default function VizQuestion({
           strokeWidth="1"
         />
       </svg>
-
       <motion.div
         className="mt-4 cursor-pointer flex flex-row items-center opacity-70"
         onClick={skipToResults}
         whileHover={{ opacity: 1 }}
-      >
-        <h2 className="text-lg text-green-500">skip to results</h2>
-      </motion.div>
+      ></motion.div>
     </div>
   );
 }
 
 type VizQuestionProps = {
   send: (x: number, y: number) => void;
-  setUserSkippedToResults: (skipped: boolean) => void;
 };
