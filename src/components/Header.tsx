@@ -4,11 +4,11 @@ import Link from "next/link";
 import Head from "next/head";
 import { motion } from "framer-motion";
 
-export default function Header({ title }: HeaderProps) {
+export default function Header() {
   return (
     <div className="flex w-full">
       <Head>
-        <title>{title}</title>
+        <title>random humans lab</title>
       </Head>
       <motion.div
         whileHover={{
@@ -24,13 +24,9 @@ export default function Header({ title }: HeaderProps) {
           />
         </Link>
       </motion.div>
-      <h1 className="text-black text-3xl md:text-5xl  ml-8 w-1/3 md:w-2/3">
-        {title}
+      <h1 className="text-black text-3xl md:text-5xl  ml-8 w-1/3 md:w-2/3 ">
+        random <span className="text-white">humans</span> lab
       </h1>
     </div>
   );
 }
-
-type HeaderProps = {
-  title: string;
-};

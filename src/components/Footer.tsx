@@ -8,7 +8,7 @@ export default function Footer() {
         <a
           target="_blank"
           href="https://twitter.com/aurelien_morel"
-          className="text-gray-400 hover:text-green-600"
+          className="text-gray-100 hover:text-purple-600"
         >
           aurélien
         </a>{" "}
@@ -16,7 +16,7 @@ export default function Footer() {
         <a
           target="_blank"
           href="https://vmax.one/"
-          className="text-gray-400 hover:text-green-600"
+          className="text-gray-100 hover:text-purple-600"
         >
           maxime
         </a>
