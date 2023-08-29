@@ -10,7 +10,6 @@ import Header from "@/components/Header";
 
 export default function Experiment1() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
-  const [userSkippedToResults, setUserSkippedToResults] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
 
   const checkIfUserAlreadyAnswered = async () => {
@@ -85,11 +84,11 @@ export default function Experiment1() {
 
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
-      <Header title="click somewhere" />
+      <Header title={"click somewhere"} />
 
       {!loadingVerification && (
         <div className="mt-8 md:mt-0 w-full">
-          {userAlreadyAnswered || userSkippedToResults ? (
+          {userAlreadyAnswered ? (
             <VizResults />
           ) : (
             <VizQuestion send={sendAnswer} />

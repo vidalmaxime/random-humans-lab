@@ -91,7 +91,7 @@ export default function Experiment1() {
 
   return (
     <main className={`flex min-h-screen flex-col items-center p-4`}>
-      <Header title="pick a number between 0 and infinity" />
+      <Header title={"pick a number between 0 and infinity"} />
 
       {!loadingVerification && (
         <div className="mt-16 w-full">

@@ -32,11 +32,6 @@ export default function VizQuestion({ send }: VizQuestionProps) {
           strokeWidth="1"
         />
       </svg>
-      <motion.div
-        className="mt-4 cursor-pointer flex flex-row items-center opacity-70"
-        onClick={skipToResults}
-        whileHover={{ opacity: 1 }}
-      ></motion.div>
     </div>
   );
 }
