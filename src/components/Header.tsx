@@ -40,7 +40,7 @@ export default function Header({ title }: { title: string }) {
             key={index}
             className={`text-${
               colors[index] || "black"
-            } transition ease-in delay-150 duration-500	`}
+            } transition ease-in delay-200 duration-500	`}
           >
             {word}{" "}
           </span>
