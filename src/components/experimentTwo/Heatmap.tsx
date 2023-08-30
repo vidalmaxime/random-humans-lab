@@ -7,13 +7,13 @@ type HeatmapData = {
 
 type HeatmapProps = {
   data: HeatmapData;
-  userPosition: { x: number; y: number };
+  userPosition?: { x: number; y: number };
   baseRadius: number;
 };
 
 const Heatmap: React.FC<HeatmapProps> = ({
   data,
-  userPosition,
+  userPosition = { x: null, y: null },
   baseRadius,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -57,12 +57,11 @@ const Heatmap: React.FC<HeatmapProps> = ({
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         let radius = getDynamicRadius(baseRadius, data.length);
-        console.log("radius", radius);
+
         console.log(canvas.width * 0.05);
         radius *= canvas.width * 0.0005;
-        console.log("radius2", radius);
+
         radius = Math.max(50, Math.min(radius, canvas.width * 0.05));
-        console.log("radius3", radius);
 
         data.forEach((point) => {
           const x = point.x * width;
@@ -78,29 +77,31 @@ const Heatmap: React.FC<HeatmapProps> = ({
         });
 
         // Drawing user position image
-        const imageScale = 0.15 + (0.08 * width) / 1000;
-        const userX = userPosition.x * width;
-        const userY = userPosition.y * height;
+        if (userPosition.x != null && userPosition.y != null) {
+          const imageScale = 0.15 + (0.08 * width) / 1000;
+          const userX = userPosition.x * width;
+          const userY = userPosition.y * height;
 
-        const userIcon = new Image();
+          const userIcon = new Image();
 
-        userIcon.onload = () => {
-          ctx.imageSmoothingEnabled = false;
-          const scaledWidth = userIcon.width * imageScale;
-          const scaledHeight = userIcon.height * imageScale;
-          ctx.drawImage(
-            userIcon,
-            0,
-            0,
-            userIcon.width,
-            userIcon.height,
-            userX - scaledWidth / 2,
-            userY - scaledHeight / 2,
-            scaledWidth,
-            scaledHeight
-          );
-        };
-        userIcon.src = "/click-icon.svg";
+          userIcon.onload = () => {
+            ctx.imageSmoothingEnabled = false;
+            const scaledWidth = userIcon.width * imageScale;
+            const scaledHeight = userIcon.height * imageScale;
+            ctx.drawImage(
+              userIcon,
+              0,
+              0,
+              userIcon.width,
+              userIcon.height,
+              userX - scaledWidth / 2,
+              userY - scaledHeight / 2,
+              scaledWidth,
+              scaledHeight
+            );
+          };
+          userIcon.src = "/click-icon.svg";
+        }
       }
     }
   };

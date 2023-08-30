@@ -61,7 +61,8 @@ export default function Experiment1() {
     x: number,
     y: number,
     clientWidth: number,
-    clientHeight: number
+    clientHeight: number,
+    deviceType: string
   ) {
     const user = auth.currentUser;
     if (user) {
@@ -76,6 +77,7 @@ export default function Experiment1() {
           y: y,
           clientWidth: clientWidth,
           clientHeight: clientHeight,
+          deviceType: deviceType,
         });
 
         await updateDoc(generalDocRef, {
@@ -89,6 +91,7 @@ export default function Experiment1() {
               y: y,
               clientWidth: clientWidth,
               clientHeight: clientHeight,
+              deviceType: deviceType,
             },
           ],
         });
@@ -100,6 +103,7 @@ export default function Experiment1() {
         y: y,
         clientWidth: clientWidth,
         clientHeight: clientHeight,
+        deviceType: deviceType,
       });
     }
   }

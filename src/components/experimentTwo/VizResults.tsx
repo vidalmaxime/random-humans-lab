@@ -7,11 +7,21 @@ import Image from "next/image";
 import Heatmap from "./Heatmap";
 
 export default function VizResults() {
-  const [userPosition, setUserPosition] = useState({ x: 0, y: 0 });
+  const [userPosition, setUserPosition] = useState({
+    x: 0,
+    y: 0,
+  });
   const [positions, setPositions] = useState([]);
+  const [mobilePositions, setMobilePositions] = useState<any[]>([]);
+  const [desktopPositions, setDesktopPositions] = useState<any[]>([]);
   const parentRef = useRef(null);
   const [scope, animate] = useAnimate();
   const [isCollapsed, setIsCollapsed] = useState(true);
+
+  // Filter positions to only include mobile or desktop
+  const filterPositions = (positions: any[], deviceType: string) => {
+    return positions.filter((position) => position.deviceType === deviceType);
+  };
 
   const toggleCollapse = () => {
     animate(
@@ -40,6 +50,8 @@ export default function VizResults() {
           if (doc.exists()) {
             const positions = doc.data().positions;
             setPositions(positions);
+            setMobilePositions(filterPositions(positions, "mobile"));
+            setDesktopPositions(filterPositions(positions, "computer"));
           }
         });
       });
@@ -85,19 +97,11 @@ export default function VizResults() {
             <div className="grid grid-cols-2 w-full pb-8">
               <div className="w-1/3 h-96">
                 mobile clicks
-                <Heatmap
-                  data={positions}
-                  userPosition={userPosition}
-                  baseRadius={200}
-                />
+                <Heatmap data={mobilePositions} baseRadius={200} />
               </div>
               <div className="w-full h-96">
                 desktop clicks
-                <Heatmap
-                  data={positions}
-                  userPosition={userPosition}
-                  baseRadius={200}
-                />
+                <Heatmap data={desktopPositions} baseRadius={200} />
               </div>
             </div>
           </motion.div>
