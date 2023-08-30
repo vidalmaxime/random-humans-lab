@@ -36,7 +36,12 @@ export default function Header({ title }: { title: string }) {
       </motion.div>
       <h1 className="text-3xl md:text-5xl ml-8 w-1/3 md:w-2/3">
         {title.split(" ").map((word, index) => (
-          <span key={index} className={`text-${colors[index] || "black"} `}>
+          <span
+            key={index}
+            className={`text-${
+              colors[index] || "black"
+            } transition ease-in delay-300`}
+          >
             {word}{" "}
           </span>
         ))}

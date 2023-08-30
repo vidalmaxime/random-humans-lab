@@ -25,15 +25,29 @@ const Heatmap: React.FC<HeatmapProps> = ({
   };
 
   useEffect(() => {
+    renderCanvas();
+  }, [data, baseRadius, userPosition]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      renderCanvas();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [data, baseRadius, userPosition]);
+
+  const renderCanvas = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext("2d");
       if (ctx) {
         const pixelRatio = window.devicePixelRatio || 1;
-        console.log(pixelRatio);
         // Adjust the canvas dimensions for the pixel ratio
         const { width, height } = canvas.getBoundingClientRect();
-        console.log(width, height);
         canvas.width = width * pixelRatio;
         canvas.height = height * pixelRatio;
 
@@ -42,7 +56,13 @@ const Heatmap: React.FC<HeatmapProps> = ({
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const radius = getDynamicRadius(baseRadius, data.length);
+        let radius = getDynamicRadius(baseRadius, data.length);
+        console.log("radius", radius);
+        console.log(canvas.width * 0.05);
+        radius *= canvas.width * 0.0005;
+        console.log("radius2", radius);
+        radius = Math.max(50, Math.min(radius, canvas.width * 0.05));
+        console.log("radius3", radius);
 
         data.forEach((point) => {
           const x = point.x * width;
@@ -58,7 +78,7 @@ const Heatmap: React.FC<HeatmapProps> = ({
         });
 
         // Drawing user position image
-        const imageScale = 0.5;
+        const imageScale = 0.15 + (0.08 * width) / 1000;
         const userX = userPosition.x * width;
         const userY = userPosition.y * height;
 
@@ -80,15 +100,15 @@ const Heatmap: React.FC<HeatmapProps> = ({
             scaledHeight
           );
         };
-        userIcon.src = "/world-icon.svg";
+        userIcon.src = "/click-icon.svg";
       }
     }
-  }, [data]);
+  };
 
   return (
     <canvas
       ref={canvasRef}
-      className="border border-gray-200 w-full h-5/6"
+      className="border border-gray-200 w-full h-full"
     ></canvas>
   );
 };
