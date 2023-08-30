@@ -71,8 +71,12 @@ const Heatmap: React.FC<HeatmapProps> = ({
           const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
           gradient.addColorStop(0, "rgba(255, 0, 0, 0.4)");
           gradient.addColorStop(1, "rgba(0, 0, 255, 0.01)");
-          gradient.addColorStop(1, "rgba(0, 0, 255, 0.1)");
-
+          if (
+            navigator.userAgent.indexOf("Safari") !== -1 &&
+            navigator.userAgent.indexOf("Chrome") === -1
+          ) {
+            gradient.addColorStop(1, "rgba(0, 0, 255, 0.1)");
+          }
           ctx.fillStyle = gradient;
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, 2 * Math.PI);
