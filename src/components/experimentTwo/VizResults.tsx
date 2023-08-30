@@ -95,11 +95,11 @@ export default function VizResults() {
             transition={{ duration: 0.4 }}
           >
             <div className="grid grid-cols-2 w-full pb-8">
-              <div className="w-1/3 h-96">
+              <div className="w-2/3 md:w-1/3 h-64 md:h-96">
                 mobile clicks
                 <Heatmap data={mobilePositions} baseRadius={200} />
               </div>
-              <div className="w-full h-96">
+              <div className="w-full h-36 md:h-96">
                 desktop clicks
                 <Heatmap data={desktopPositions} baseRadius={200} />
               </div>

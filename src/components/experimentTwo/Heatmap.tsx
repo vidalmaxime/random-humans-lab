@@ -58,17 +58,19 @@ const Heatmap: React.FC<HeatmapProps> = ({
 
         let radius = getDynamicRadius(baseRadius, data.length);
 
-        console.log(canvas.width * 0.05);
-        radius *= canvas.width * 0.0005;
+        radius *=
+          Math.sqrt(
+            canvas.width * canvas.width + canvas.height * canvas.height
+          ) * 0.0004;
 
-        radius = Math.max(50, Math.min(radius, canvas.width * 0.05));
+        radius = Math.max(40, radius);
 
         data.forEach((point) => {
           const x = point.x * width;
           const y = point.y * height;
           const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
           gradient.addColorStop(0, "rgba(255, 0, 0, 0.5)");
-          gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
+          gradient.addColorStop(1, "rgba(0, 0, 255, 0.01)");
 
           ctx.fillStyle = gradient;
           ctx.beginPath();
