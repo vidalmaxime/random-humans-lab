@@ -2,12 +2,9 @@ import React from "react";
 
 export default function VizQuestion({ send }: VizQuestionProps) {
   return (
-    <div className="flex justify-center flex-col items-center ">
-      click
-      <svg
-        className="md:w-96 w-full cursor-pointer"
-        viewBox="0 0 100 100"
-        xmlns="http://www.w3.org/2000/svg"
+    <div className="flex justify-center flex-col items-center w-full h-full">
+      <div
+        className="w-screen h-full cursor-pointer bg-black"
         onClick={(e) => {
           // Get the offset of the click relative to the svg rectangle on a scale of 0 to 1
           const x = e.nativeEvent.offsetX / e.currentTarget.clientWidth;
@@ -18,23 +15,18 @@ export default function VizQuestion({ send }: VizQuestionProps) {
             e.currentTarget.clientHeight
           );
 
-          send(x, y);
+          send(x, y, e.currentTarget.clientWidth, e.currentTarget.clientHeight);
         }}
-      >
-        <rect
-          x="0"
-          y="0"
-          width="100"
-          height="100"
-          fill="transparent"
-          stroke="black"
-          strokeWidth="1"
-        />
-      </svg>
+      ></div>
     </div>
   );
 }
 
 type VizQuestionProps = {
-  send: (x: number, y: number) => void;
+  send: (
+    x: number,
+    y: number,
+    clientWidth: number,
+    clientHeight: number
+  ) => void;
 };

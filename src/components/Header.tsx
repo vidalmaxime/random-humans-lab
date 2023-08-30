@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Head from "next/head";
 import { motion } from "framer-motion";
 
 export default function Header({ title }: { title: string }) {
+  const [colors, setColors] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Generate random colors upon component mount
+    const generatedColors = title
+      .split(" ")
+      .map(() => (Math.random() < 0.5 ? "white" : "black"));
+    setColors(generatedColors);
+  }, [title]);
+
   return (
     <div className="flex w-full">
       <Head>
@@ -26,16 +36,7 @@ export default function Header({ title }: { title: string }) {
       </motion.div>
       <h1 className="text-3xl md:text-5xl ml-8 w-1/3 md:w-2/3">
         {title.split(" ").map((word, index) => (
-          <span
-            key={index}
-            className={`text-${
-              Math.random() < 0.5 ? "white" : "black"
-            } bg-gradient-to-r ${
-              Math.random() < 0.5
-                ? "from-black to-white"
-                : "from-white to-black"
-            } bg-clip-text`}
-          >
+          <span key={index} className={`text-${colors[index] || "black"} `}>
             {word}{" "}
           </span>
         ))}

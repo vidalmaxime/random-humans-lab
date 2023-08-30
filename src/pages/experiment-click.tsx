@@ -57,7 +57,12 @@ export default function Experiment1() {
     };
   }, []);
 
-  async function sendAnswer(x: number, y: number) {
+  async function sendAnswer(
+    x: number,
+    y: number,
+    clientWidth: number,
+    clientHeight: number
+  ) {
     const user = auth.currentUser;
     if (user) {
       // Add to general doc containing array of all answers using arrayUnion
@@ -66,29 +71,46 @@ export default function Experiment1() {
 
       if (document.exists()) {
         const tempPositions = document.data()?.positions;
-        tempPositions.push({ x: x, y: y });
+        tempPositions.push({
+          x: x,
+          y: y,
+          clientWidth: clientWidth,
+          clientHeight: clientHeight,
+        });
 
         await updateDoc(generalDocRef, {
           positions: tempPositions,
         });
       } else {
         await setDoc(generalDocRef, {
-          positions: [{ x: x, y: y }],
+          positions: [
+            {
+              x: x,
+              y: y,
+              clientWidth: clientWidth,
+              clientHeight: clientHeight,
+            },
+          ],
         });
       }
       // Create doc with user uid
       const docRef = doc(db, "experiment_2", user.uid);
-      setDoc(docRef, { x: x, y: y });
+      setDoc(docRef, {
+        x: x,
+        y: y,
+        clientWidth: clientWidth,
+        clientHeight: clientHeight,
+      });
     }
   }
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-4`}>
-      <Header title={"click somewhere"} />
+    <main className={`flex h-screen flex-col items-center p-4`}>
+      <Header title={"click somewhere below"} />
 
       {!loadingVerification && (
-        <div className="mt-8 md:mt-0 w-full">
-          {!userAlreadyAnswered ? (
+        <div className="mt-8 md:mt-0 w-full h-full">
+          {userAlreadyAnswered ? (
             <VizResults />
           ) : (
             <VizQuestion send={sendAnswer} />
