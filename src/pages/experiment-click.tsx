@@ -4,19 +4,18 @@ import { doc, onSnapshot, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { auth, db } from "../../firebase";
 
-import VizQuestion from "@/components/experimentOne/VizQuestion";
-import VizResults from "@/components/experimentOne/VizResults";
+import VizQuestion from "@/components/experimentTwo/VizQuestion";
+import VizResults from "@/components/experimentTwo/VizResults";
 import Header from "@/components/Header";
 
 export default function Experiment1() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
-  const [userSkippedToResults, setUserSkippedToResults] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
 
   const checkIfUserAlreadyAnswered = async () => {
     const user = await signInAnonymously(auth);
     if (user) {
-      const docRef = doc(db, "experiment_1", user.user.uid);
+      const docRef = doc(db, "experiment_2", user.user.uid);
       getDoc(docRef).then((doc) => {
         if (doc.exists()) {
           setUserAlreadyAnswered(true);
@@ -36,7 +35,7 @@ export default function Experiment1() {
     let unsubscribe = () => {};
     const user = auth.currentUser;
     if (user) {
-      unsubscribe = onSnapshot(doc(db, "experiment_1", user.uid), (doc) => {
+      unsubscribe = onSnapshot(doc(db, "experiment_2", user.uid), (doc) => {
         if (doc.exists()) {
           setUserAlreadyAnswered(true);
         }
@@ -44,7 +43,7 @@ export default function Experiment1() {
     } else {
       signInAnonymously(auth).then((user) => {
         unsubscribe = onSnapshot(
-          doc(db, "experiment_1", user.user.uid),
+          doc(db, "experiment_2", user.user.uid),
           (doc) => {
             if (doc.exists()) {
               setUserAlreadyAnswered(true);
@@ -58,50 +57,67 @@ export default function Experiment1() {
     };
   }, []);
 
-  async function sendAnswer(value: number, numberFactors: number) {
+  async function sendAnswer(
+    x: number,
+    y: number,
+    clientWidth: number,
+    clientHeight: number,
+    deviceType: string
+  ) {
     const user = auth.currentUser;
     if (user) {
       // Add to general doc containing array of all answers using arrayUnion
-      const generalDocRef = doc(db, "experiment_1", "general");
+      const generalDocRef = doc(db, "experiment_2", "general");
       const document = await getDoc(generalDocRef);
 
       if (document.exists()) {
-        // Update both answers and numberFactors by storing a temp array
-        const tempAnswers = document.data()?.answers;
-        tempAnswers.push(value);
-        const tempNumberFactors = document.data()?.numberFactors;
-        if (numberFactors !== -1) {
-          tempNumberFactors.push(numberFactors);
-        }
+        const tempPositions = document.data()?.positions;
+        tempPositions.push({
+          x: x,
+          y: y,
+          clientWidth: clientWidth,
+          clientHeight: clientHeight,
+          deviceType: deviceType,
+        });
+
         await updateDoc(generalDocRef, {
-          answers: tempAnswers,
-          numberFactors: tempNumberFactors,
+          positions: tempPositions,
         });
       } else {
         await setDoc(generalDocRef, {
-          answers: [value],
-          numberFactors: numberFactors !== -1 ? [numberFactors] : [],
+          positions: [
+            {
+              x: x,
+              y: y,
+              clientWidth: clientWidth,
+              clientHeight: clientHeight,
+              deviceType: deviceType,
+            },
+          ],
         });
       }
       // Create doc with user uid
-      const docRef = doc(db, "experiment_1", user.uid);
-      setDoc(docRef, { answer: value, numberFactors: numberFactors });
+      const docRef = doc(db, "experiment_2", user.uid);
+      setDoc(docRef, {
+        x: x,
+        y: y,
+        clientWidth: clientWidth,
+        clientHeight: clientHeight,
+        deviceType: deviceType,
+      });
     }
   }
 
   return (
-    <main className={`flex min-h-screen flex-col items-center p-4`}>
-      <Header title={"pick a number between 0 and infinity"} />
+    <main className={`flex h-screen flex-col items-center p-4`}>
+      <Header title={"click somewhere below"} />
 
       {!loadingVerification && (
-        <div className="mt-16 w-full">
-          {userAlreadyAnswered || userSkippedToResults ? (
+        <div className="mt-8 md:mt-0 w-full h-full">
+          {userAlreadyAnswered ? (
             <VizResults />
           ) : (
-            <VizQuestion
-              send={sendAnswer}
-              setUserSkippedToResults={setUserSkippedToResults}
-            />
+            <VizQuestion send={sendAnswer} />
           )}
         </div>
       )}

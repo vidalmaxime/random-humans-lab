@@ -32,6 +32,7 @@ export default function DensityLog({ points, title }: DensityLogProps) {
             dataKey="count"
             stroke="#000000"
             fill="#FFFFFF"
+            fillOpacity={0.6}
           />
         </AreaChart>
       </ResponsiveContainer>

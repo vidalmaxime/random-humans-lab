@@ -3,13 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function ExperimentTile({ name }: ExperimentTileProps) {
+export default function ExperimentTile({ name, path }: ExperimentTileProps) {
   return (
     <motion.div whileHover={{ scale: 1.1 }}>
-      <Link
-        className="flex items-center justify-center"
-        href="/experiment-number"
-      >
+      <Link className="flex items-center justify-center" href={path}>
         <Image
           src="/world-icon.svg"
           alt="Experiment Logo"
@@ -17,11 +14,12 @@ export default function ExperimentTile({ name }: ExperimentTileProps) {
           height={36}
           className="mr-4"
         />
-        <p className="text text-black text-2xl"> {name}</p>
+        <p className="text text-white text-2xl"> {name}</p>
       </Link>
     </motion.div>
   );
 }
 type ExperimentTileProps = {
   name: string;
+  path: string;
 };

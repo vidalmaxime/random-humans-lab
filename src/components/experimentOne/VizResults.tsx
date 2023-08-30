@@ -184,7 +184,7 @@ export default function VizResults() {
         <a
           target="_blank"
           href="https://consc.net/notes/pick-a-number.html"
-          className="text-green-500"
+          className="text-white"
         >
           experiment
         </a>
@@ -196,7 +196,7 @@ export default function VizResults() {
         onClick={toggleCollapse}
         whileHover={{ opacity: 1 }}
       >
-        <h2 className=" text-lg text-green-500">
+        <h2 className="text-lg text-white">
           click here for other data visualizations
         </h2>
         <div className="ml-2" ref={scope}>
