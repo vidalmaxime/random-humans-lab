@@ -15,7 +15,7 @@ export default function Footer() {
         and{" "}
         <a
           target="_blank"
-          href="https://vmax.one/"
+          href="https://maximevidal.com/"
           className="text-gray-100 hover:text-purple-600"
         >
           maxime
