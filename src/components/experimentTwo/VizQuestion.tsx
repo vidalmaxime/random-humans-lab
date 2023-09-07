@@ -31,9 +31,7 @@ export default function VizQuestion({ send }: VizQuestionProps) {
           }}
         ></div>
       ) : (
-        <div>
-          <SkewLoader color="black" speedMultiplier={0.5} />
-        </div>
+        <SkewLoader color="black" speedMultiplier={0.5} />
       )}
     </div>
   );

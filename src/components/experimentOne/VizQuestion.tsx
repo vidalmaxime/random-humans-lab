@@ -111,7 +111,7 @@ export default function VizQuestion({
         onClick={skipToResults}
         whileHover={{ opacity: 1 }}
       >
-        <h2 className="text-lg text-green-500">skip to results</h2>
+        <h2 className="text-lg text-green-100">skip to results</h2>
       </motion.div>
     </div>
   );

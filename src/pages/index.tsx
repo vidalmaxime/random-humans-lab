@@ -25,6 +25,7 @@ export default function Home() {
         <div className="mt-4 mb-4 md:mt-16 flex flex-col items-start">
           <ExperimentTile name="experiment 1" path="/experiment-number" />
           <ExperimentTile name="experiment 2" path="/experiment-click" />
+          <ExperimentTile name="experiment 3" path="/experiment-time" />
         </div>
         <Footer />
       </main>
