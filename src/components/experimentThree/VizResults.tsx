@@ -53,27 +53,29 @@ export default function VizResults() {
   }, []);
 
   return (
-    <div className="text-black flex flex-col items-center w-full mb-32">
-      {userAnswer !== "" ? (
-        <h1 className="mb-4 text-xl">
-          you picked {userAnswer},{" "}
-          {userAnswerCount === 1
-            ? `it’s the first time this word has been chosen out of
+    <div className="text-black flex flex-col items-start w-full mb-32">
+      <div className="text-black flex flex-col items-center w-full mb-12">
+        {userAnswer !== "" ? (
+          <h1 className="mb-4 text-xl">
+            you picked {userAnswer},{" "}
+            {userAnswerCount === 0
+              ? `it’s the first time this word has been chosen out of
             ${totalPicks}
              picks`
-            : `this word has been chosen 
+              : `this word has been chosen 
             ${userAnswerCount} 
             times out of
             ${totalPicks} 
-            picks`}
-        </h1>
-      ) : (
-        <h1 className="mb-4 text-xl">
-          there has been {totalPicks} total picks
-        </h1>
-      )}
+            other picks`}
+          </h1>
+        ) : (
+          <h1 className="mb-4 text-xl">
+            there has been {totalPicks} total picks
+          </h1>
+        )}
+      </div>
       <div>
-        <h2 className="text-left text-start mt-12 font-mono">
+        <h2 className="text-left text-start mt-2 font-mono">
           the picked words are
         </h2>
       </div>

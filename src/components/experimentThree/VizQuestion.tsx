@@ -18,18 +18,19 @@ export default function VizQuestion({
       handleSubmit(e);
     }
   };
-
+  // check if the word is valid: length > 0, it's a single word without spaces, and length < 60
   const handleSubmit = (e: any) => {
     if (submitted) return;
     e.preventDefault();
-    if (word.length > 0) {
-      send(word);
-      setSubmitted(true);
-    } else {
+    if (word.length === 0 || word.includes(" ") || word.length > 60) {
       setWarningGiveWord(true);
       setTimeout(() => {
         setWarningGiveWord(false);
       }, 2000);
+      return;
+    } else {
+      send(word);
+      setSubmitted(true);
     }
   };
 
@@ -58,7 +59,9 @@ export default function VizQuestion({
           Submit
         </motion.button>
       </div>
-      {warningGiveWord && <p className="text-red-500">Please enter a word</p>}
+      {warningGiveWord && (
+        <p className="text-red-500">Please enter a valid word</p>
+      )}
       <motion.div
         className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
         onClick={skipToResults}
