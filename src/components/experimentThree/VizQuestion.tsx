@@ -29,7 +29,8 @@ export default function VizQuestion({
       }, 2000);
       return;
     } else {
-      send(word);
+      // make the word lowercase
+      send(word.toLowerCase());
       setSubmitted(true);
     }
   };
