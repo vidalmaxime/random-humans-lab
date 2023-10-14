@@ -1,6 +1,8 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import Plot from "react-plotly.js";
+// import Plot from "react-plotly.js";
+import dynamic from "next/dynamic";
 import * as druid from "@saehrimnir/druidjs";
 import * as tf from "@tensorflow/tfjs";
 
@@ -10,22 +12,26 @@ interface TSNEVisualizerProps {
   allAnswers: any[]; // Adjust this type based on the structure of your answers
 }
 
+const Plot = dynamic(() => import("react-plotly.js"), {
+  ssr: false,
+  loading: () => <div>Loading Plot...</div>,
+});
+
 const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
   model,
   allAnswers,
 }) => {
   const [projectionData, setProjectionData] = useState<number[][]>([]);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState<number>(0); // Initialize with 0, then update after mount
 
-  // Handle screen resizing
   useEffect(() => {
+    setScreenWidth(window.innerWidth); // Set screenWidth only after the component has mounted
+
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
