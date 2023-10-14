@@ -18,7 +18,7 @@
       "@/*": ["./src/*"]
     },
     "typeRoots": ["./types", "./node_modules/@types"],
-    "types": ["@saehrimnir/druidjs", "node"]
+    "types": ["druidjs", "node"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
