@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { nanumMyeongjo } from "@/styles/fonts";
-
 import { auth, db } from "../../../firebase";
-
 require("@tensorflow/tfjs");
 import * as use from "@tensorflow-models/universal-sentence-encoder";
+
 import TSNEVisualizer from "./TSNEVisualizer";
+import { nanumMyeongjo } from "@/styles/fonts";
 
 interface Point {
   x: number;

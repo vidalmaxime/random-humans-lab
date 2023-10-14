@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Plot from "react-plotly.js";
 import * as druid from "@saehrimnir/druidjs";
+import * as tf from "@tensorflow/tfjs";
 
 // Define prop types
 interface TSNEVisualizerProps {
@@ -55,7 +56,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
 
   async function encodeWords() {
     if (model) {
-      model.embed(allAnswers).then(async (embeddings) => {
+      model.embed(allAnswers).then(async (embeddings: tf.Tensor) => {
         console.log(embeddings.arraySync());
         let generator = new druid.TSNE(embeddings.arraySync()).generator();
 
