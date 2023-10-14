@@ -7,8 +7,9 @@ import * as tf from "@tensorflow/tfjs";
 
 // Define prop types
 interface TSNEVisualizerProps {
-  model: any; // Adjust this type based on your model's type definition
-  allAnswers: any[]; // Adjust this type based on the structure of your answers
+  model: any;
+  allAnswers: any[];
+  userAnswer: string;
 }
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -19,6 +20,7 @@ const Plot = dynamic(() => import("react-plotly.js"), {
 const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
   model,
   allAnswers,
+  userAnswer,
 }) => {
   const [projectionData, setProjectionData] = useState<number[][]>([]);
   const [screenWidth, setScreenWidth] = useState<number>(0); // Initialize with 0, then update after mount
@@ -82,7 +84,9 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
     type: "scatter",
     text: allAnswers,
     marker: {
-      color: "black", // setting scatter point color to black
+      color: allAnswers.map((answer) =>
+        answer === userAnswer ? "red" : "black"
+      ), // color points based on the user's answer
     },
     hoverinfo: "text",
   };
@@ -92,7 +96,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
       {loadingEmbeddings && <div>Embeddings are loading...</div>}
       {!loadingEmbeddings && projectionData.length === 0 && (
         <button
-          className="bg-black text-white mt-4 py-2 px-4 rounded-full"
+          className="bg-black text-white mb-4 py-2 px-4 rounded-full"
           onClick={encodeWords}
         >
           Compute tSNE embeddings
