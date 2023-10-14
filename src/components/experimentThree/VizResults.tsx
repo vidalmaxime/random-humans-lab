@@ -6,6 +6,7 @@ import * as use from "@tensorflow-models/universal-sentence-encoder";
 
 import TSNEVisualizer from "./TSNEVisualizer";
 import { nanumMyeongjo } from "@/styles/fonts";
+import { UniversalSentenceEncoder } from "@tensorflow-models/universal-sentence-encoder";
 
 interface Point {
   x: number;
@@ -17,7 +18,7 @@ export default function VizResults() {
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [allAnswers, setAllAnswers] = useState<any>([]);
   const [totalPicks, setTotalPicks] = useState(0);
-  const [model, setModel] = useState(null);
+  const [model, setModel] = useState<null | UniversalSentenceEncoder>(null);
 
   useEffect(() => {
     async function loadModel() {
