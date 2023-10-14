@@ -110,7 +110,11 @@ export default function VizResults() {
         <div>Embedding model is loading...</div>
       ) : (
         <div className="w-full">
-          <TSNEVisualizer model={model} allAnswers={allAnswers} />
+          <TSNEVisualizer
+            model={model}
+            allAnswers={allAnswers}
+            userAnswer={userAnswer}
+          />
         </div>
       )}
     </div>
