@@ -8,11 +8,6 @@ import TSNEVisualizer from "./TSNEVisualizer";
 import { nanumMyeongjo } from "@/styles/fonts";
 import { UniversalSentenceEncoder } from "@tensorflow-models/universal-sentence-encoder";
 
-interface Point {
-  x: number;
-  y: number;
-}
-
 export default function VizResults() {
   const [userAnswer, setUserAnswer] = useState("");
   const [userAnswerCount, setUserAnswerCount] = useState(0);
