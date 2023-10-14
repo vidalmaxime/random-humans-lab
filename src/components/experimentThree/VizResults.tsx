@@ -58,9 +58,9 @@ export default function VizResults() {
 
   return (
     <div className="text-black flex flex-col items-start w-full mb-32">
-      <div className="text-black flex flex-col items-center w-full mb-12">
+      <div className="text-black flex flex-col items-center w-full mb-4">
         {userAnswer !== "" ? (
-          <h1 className="mb-4 text-xl">
+          <h1 className="ext-xl">
             you picked {userAnswer},{" "}
             {userAnswerCount === 0
               ? `it’s the first time this word has been chosen out of
@@ -73,11 +73,20 @@ export default function VizResults() {
             other picks`}
           </h1>
         ) : (
-          <h1 className="mb-4 text-xl">
-            there has been {totalPicks} total picks
-          </h1>
+          <h1 className="text-xl">there has been {totalPicks} total picks</h1>
         )}
       </div>
+      {!model ? (
+        <div>Embedding model is loading...</div>
+      ) : (
+        <div className="w-full">
+          <TSNEVisualizer
+            model={model}
+            allAnswers={allAnswers}
+            userAnswer={userAnswer}
+          />
+        </div>
+      )}
       <div>
         <h2 className="text-left text-start mt-2 font-mono">
           the picked words are
@@ -101,7 +110,11 @@ export default function VizResults() {
         <div>Embedding model is loading...</div>
       ) : (
         <div className="w-full">
-          <TSNEVisualizer model={model} allAnswers={allAnswers} />
+          <TSNEVisualizer
+            model={model}
+            allAnswers={allAnswers}
+            userAnswer={userAnswer}
+          />
         </div>
       )}
     </div>
