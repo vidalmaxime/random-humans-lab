@@ -86,7 +86,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
         Compute the tSNE of the word embeddings
       </button>
       {projectionData.length > 0 && (
-        <Plot data={[scatterData]} layout={layout} config={config} />
+        <Plot data={[scatterData as any]} layout={layout} config={config} />
       )}
     </div>
   );
