@@ -18,7 +18,6 @@ export default function VizResults() {
   const [allAnswers, setAllAnswers] = useState<any>([]);
   const [totalPicks, setTotalPicks] = useState(0);
   const [model, setModel] = useState(null);
-  const [projectionData, setProjectionData] = useState<Point[]>([]); // Replace with your actual projection data
 
   useEffect(() => {
     async function loadModel() {
@@ -28,32 +27,6 @@ export default function VizResults() {
 
     loadModel();
   }, []);
-
-  // async function encodeWords() {
-  //   if (model) {
-  //     model.embed(allAnswers).then(async (embeddings) => {
-  //       embeddings.print();
-  //       // const X = druid.Matrix.from(embeddings.dataSync());
-  //       console.log(embeddings.arraySync());
-  //       let generator = new druid.TSNE(embeddings.arraySync()).generator();
-
-  //       for (const Y of generator) {
-  //         console.log(Y);
-  //         setProjectionData(Y);
-  //       }
-  //     });
-  //   }
-  // }
-
-  // Make a list of 300 random strings of 5 characters
-  const randomStrings = [];
-  for (let i = 0; i < 300; i++) {
-    let randomString = "";
-    for (let j = 0; j < 5; j++) {
-      randomString += String.fromCharCode(97 + Math.floor(Math.random() * 26));
-    }
-    randomStrings.push(randomString);
-  }
 
   function countOccurrences(arr: [], target: string) {
     let count = 0;

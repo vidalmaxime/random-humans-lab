@@ -75,7 +75,6 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
     mode: "markers",
     type: "scatter",
     text: allAnswers,
-    textposition: "top right",
     marker: {
       color: "black", // setting scatter point color to black
     },
