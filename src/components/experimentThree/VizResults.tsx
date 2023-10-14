@@ -105,6 +105,14 @@ export default function VizResults() {
           </p>
         ))}
       </div>
+
+      {!model ? (
+        <div>Embedding model is loading...</div>
+      ) : (
+        <div className="w-full">
+          <TSNEVisualizer model={model} allAnswers={allAnswers} />
+        </div>
+      )}
     </div>
   );
 }
