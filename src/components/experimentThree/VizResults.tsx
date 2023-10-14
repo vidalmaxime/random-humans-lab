@@ -4,11 +4,47 @@ import { nanumMyeongjo } from "@/styles/fonts";
 
 import { auth, db } from "../../../firebase";
 
+require("@tensorflow/tfjs");
+import * as use from "@tensorflow-models/universal-sentence-encoder";
+import TSNEVisualizer from "./TSNEVisualizer";
+
+interface Point {
+  x: number;
+  y: number;
+}
+
 export default function VizResults() {
   const [userAnswer, setUserAnswer] = useState("");
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [allAnswers, setAllAnswers] = useState<any>([]);
   const [totalPicks, setTotalPicks] = useState(0);
+  const [model, setModel] = useState(null);
+  const [projectionData, setProjectionData] = useState<Point[]>([]); // Replace with your actual projection data
+
+  useEffect(() => {
+    async function loadModel() {
+      const loadedModel = await use.load();
+      setModel(loadedModel);
+    }
+
+    loadModel();
+  }, []);
+
+  // async function encodeWords() {
+  //   if (model) {
+  //     model.embed(allAnswers).then(async (embeddings) => {
+  //       embeddings.print();
+  //       // const X = druid.Matrix.from(embeddings.dataSync());
+  //       console.log(embeddings.arraySync());
+  //       let generator = new druid.TSNE(embeddings.arraySync()).generator();
+
+  //       for (const Y of generator) {
+  //         console.log(Y);
+  //         setProjectionData(Y);
+  //       }
+  //     });
+  //   }
+  // }
 
   // Make a list of 300 random strings of 5 characters
   const randomStrings = [];
@@ -92,6 +128,14 @@ export default function VizResults() {
           </p>
         ))}
       </div>
+
+      {!model ? (
+        <div>Embedding model is loading...</div>
+      ) : (
+        <div className="w-full">
+          <TSNEVisualizer model={model} allAnswers={allAnswers} />
+        </div>
+      )}
     </div>
   );
 }
