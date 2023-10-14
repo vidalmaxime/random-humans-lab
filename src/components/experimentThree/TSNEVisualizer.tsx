@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-// import Plot from "react-plotly.js";
 import dynamic from "next/dynamic";
 import * as druid from "@saehrimnir/druidjs";
 import * as tf from "@tensorflow/tfjs";
@@ -23,6 +22,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
 }) => {
   const [projectionData, setProjectionData] = useState<number[][]>([]);
   const [screenWidth, setScreenWidth] = useState<number>(0); // Initialize with 0, then update after mount
+  const [loadingEmbeddings, setLoadingEmbeddings] = useState<boolean>(false);
 
   useEffect(() => {
     setScreenWidth(window.innerWidth); // Set screenWidth only after the component has mounted
@@ -63,12 +63,11 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
 
   async function encodeWords() {
     if (model) {
+      setLoadingEmbeddings(true);
       model.embed(allAnswers).then(async (embeddings: tf.Tensor) => {
-        console.log(embeddings.arraySync());
+        setLoadingEmbeddings(false);
         let generator = new druid.TSNE(embeddings.arraySync()).generator();
-
         for (const Y of generator) {
-          console.log(Y);
           setProjectionData(Y);
           await new Promise((resolve) => setTimeout(resolve, 100)); // delay of 100ms
         }
@@ -85,13 +84,21 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
     marker: {
       color: "black", // setting scatter point color to black
     },
+    hoverinfo: "text",
   };
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      <button onClick={encodeWords}>
-        Compute the tSNE of the word embeddings
-      </button>
+      {loadingEmbeddings && <div>Embeddings are loading...</div>}
+      {!loadingEmbeddings && projectionData.length === 0 && (
+        <button
+          className="bg-black text-white mt-4 py-2 px-4 rounded-full"
+          onClick={encodeWords}
+        >
+          Compute tSNE embeddings
+        </button>
+      )}
+
       {projectionData.length > 0 && (
         <Plot data={[scatterData as any]} layout={layout} config={config} />
       )}
