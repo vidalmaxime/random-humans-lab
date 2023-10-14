@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
-import { nanumMyeongjo } from "@/styles/fonts";
-
 import { auth, db } from "../../../firebase";
+require("@tensorflow/tfjs");
+import * as use from "@tensorflow-models/universal-sentence-encoder";
+
+import TSNEVisualizer from "./TSNEVisualizer";
+import { nanumMyeongjo } from "@/styles/fonts";
+import { UniversalSentenceEncoder } from "@tensorflow-models/universal-sentence-encoder";
 
 export default function VizResults() {
   const [userAnswer, setUserAnswer] = useState("");
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [allAnswers, setAllAnswers] = useState<any>([]);
   const [totalPicks, setTotalPicks] = useState(0);
+  const [model, setModel] = useState<null | UniversalSentenceEncoder>(null);
 
-  // Make a list of 300 random strings of 5 characters
-  const randomStrings = [];
-  for (let i = 0; i < 300; i++) {
-    let randomString = "";
-    for (let j = 0; j < 5; j++) {
-      randomString += String.fromCharCode(97 + Math.floor(Math.random() * 26));
+  useEffect(() => {
+    async function loadModel() {
+      const loadedModel = await use.load();
+      setModel(loadedModel);
     }
-    randomStrings.push(randomString);
-  }
+
+    loadModel();
+  }, []);
 
   function countOccurrences(arr: [], target: string) {
     let count = 0;
@@ -92,6 +96,14 @@ export default function VizResults() {
           </p>
         ))}
       </div>
+
+      {!model ? (
+        <div>Embedding model is loading...</div>
+      ) : (
+        <div className="w-full">
+          <TSNEVisualizer model={model} allAnswers={allAnswers} />
+        </div>
+      )}
     </div>
   );
 }
