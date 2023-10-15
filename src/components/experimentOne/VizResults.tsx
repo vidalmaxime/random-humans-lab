@@ -176,7 +176,7 @@ export default function VizResults() {
 
       <BarFreq
         frequencies={valuesOccurrences}
-        title={`occurences of top ${maxNumBars} most frequent picks`}
+        title={`Occurences of top ${maxNumBars} most frequent picks`}
         yDataKey="count"
       />
 
@@ -187,7 +187,7 @@ export default function VizResults() {
         <a
           target="_blank"
           href="https://consc.net/notes/pick-a-number.html"
-          className="text-gray-500"
+          className="text-gray-500 hover:text-gray-700"
         >
           original experiment
         </a>
@@ -216,11 +216,11 @@ export default function VizResults() {
           >
             <DensityLog
               points={histogramPoints}
-              title="distribution of picks in log scale"
+              title="Distribution of picks in log scale"
             />
             <BarFreq
               frequencies={primeFactorsFrequencies}
-              title={`distribution of top ${maxNumBars} most frequent number of prime factors per pick for picks < 1000`}
+              title={`Distribution of top ${maxNumBars} most frequent number of prime factors per pick for picks < 1000`}
               yDataKey="frequency"
             />
           </motion.div>
