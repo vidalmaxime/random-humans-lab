@@ -5,8 +5,9 @@ import { AnimatePresence, motion, useAnimate } from "framer-motion";
 import Image from "next/image";
 
 import Heatmap from "./Heatmap";
+import ClickDensityPlot from "./ClickDensityPlot";
 
-export default function VizResults() {
+export default function VizResults(userDeviceType: string) {
   const [userPosition, setUserPosition] = useState({
     x: 0,
     y: 0,
@@ -64,49 +65,14 @@ export default function VizResults() {
       ref={parentRef}
     >
       <p className="flex items-left text-left w-full">
-        heatmap of all {positions.length} clicks
+        Density function of all {positions.length} clicks
       </p>
       <div className="text-black flex flex-col items-center w-full h-full mt-2">
-        <Heatmap
-          data={positions}
-          userPosition={userPosition}
-          baseRadius={200}
+        <ClickDensityPlot
+          data={userDeviceType == "mobile" ? mobilePositions : desktopPositions}
+          userDeviceType={userDeviceType}
         />
       </div>
-      <motion.div
-        className="mt-2 cursor-pointer flex flex-row items-center opacity-70 mt-8 md:mt-4"
-        onClick={toggleCollapse}
-        whileHover={{ opacity: 1 }}
-      >
-        <h2 className="text-lg text-white">
-          click here for other data visualizations
-        </h2>
-        <div className="ml-2" ref={scope}>
-          <Image src="/chevron-down.svg" alt="chevron" width={16} height={16} />
-        </div>
-      </motion.div>
-
-      <AnimatePresence>
-        {!isCollapsed && (
-          <motion.div
-            className={"flex flex-col items-center w-full mt-8"}
-            initial={{ y: -70 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <div className="grid grid-cols-2 w-full pb-8">
-              <div className="w-2/3 md:w-1/3 h-64 md:h-96">
-                mobile clicks
-                <Heatmap data={mobilePositions} baseRadius={200} />
-              </div>
-              <div className="w-full h-36 md:h-96">
-                desktop clicks
-                <Heatmap data={desktopPositions} baseRadius={200} />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

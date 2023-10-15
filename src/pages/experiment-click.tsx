@@ -8,9 +8,10 @@ import VizQuestion from "@/components/experimentTwo/VizQuestion";
 import VizResults from "@/components/experimentTwo/VizResults";
 import Header from "@/components/Header";
 
-export default function Experiment1() {
+export default function Experiment2() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
+  const [userDeviceType, setUserDeviceType] = useState<string>("");
 
   const checkIfUserAlreadyAnswered = async () => {
     const user = await signInAnonymously(auth);
@@ -46,6 +47,7 @@ export default function Experiment1() {
           doc(db, "experiment_2", user.user.uid),
           (doc) => {
             if (doc.exists()) {
+              doc.data().deviceType && setUserDeviceType(doc.data().deviceType);
               setUserAlreadyAnswered(true);
             }
           }
@@ -96,6 +98,7 @@ export default function Experiment1() {
           ],
         });
       }
+      setUserDeviceType(deviceType);
       // Create doc with user uid
       const docRef = doc(db, "experiment_2", user.uid);
       setDoc(docRef, {
@@ -115,7 +118,7 @@ export default function Experiment1() {
       {!loadingVerification && (
         <div className="mt-8 md:mt-0 w-full h-full">
           {userAlreadyAnswered ? (
-            <VizResults />
+            <VizResults userDeviceType={userDeviceType} />
           ) : (
             <VizQuestion send={sendAnswer} />
           )}
