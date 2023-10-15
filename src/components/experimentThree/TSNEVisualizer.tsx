@@ -85,7 +85,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
     text: allAnswers,
     marker: {
       color: allAnswers.map((answer) =>
-        answer === userAnswer ? "red" : "black"
+        answer === userAnswer ? "#e11d48" : "black"
       ), // color points based on the user's answer
     },
     hoverinfo: "text",
@@ -96,7 +96,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
       {loadingEmbeddings && <div>Embeddings are loading...</div>}
       {!loadingEmbeddings && projectionData.length === 0 && (
         <button
-          className="bg-black text-white mb-4 py-2 px-4 rounded-full"
+          className="bg-gray-700 hover:bg-gray-900 text-white mb-4 py-2 px-4 rounded-md"
           onClick={encodeWords}
         >
           Compute tSNE embeddings

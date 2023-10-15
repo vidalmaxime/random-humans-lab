@@ -21,7 +21,7 @@ export default function Home() {
         {/* Add a thin line  */}
         <hr className="w-screen -mx-4 border-1 border-black my-4" />
         <p
-          className={`${haasgrotdisp.className} my-4 w-full text-left text-3xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700`}
+          className={`${haasgrotdisp.className} my-4 w-full text-left text-3xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700`}
         >
           Collecting empirical evidence regarding the deterministic nature of
           what seems to be randomness.

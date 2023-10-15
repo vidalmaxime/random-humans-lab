@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
-import { AnimatePresence, motion, useAnimate } from "framer-motion";
-import Image from "next/image";
 
-import Heatmap from "./Heatmap";
 import ClickDensityPlot from "./ClickDensityPlot";
 
 export default function VizResults(userDeviceType: string) {
@@ -16,21 +13,10 @@ export default function VizResults(userDeviceType: string) {
   const [mobilePositions, setMobilePositions] = useState<any[]>([]);
   const [desktopPositions, setDesktopPositions] = useState<any[]>([]);
   const parentRef = useRef(null);
-  const [scope, animate] = useAnimate();
-  const [isCollapsed, setIsCollapsed] = useState(true);
 
   // Filter positions to only include mobile or desktop
   const filterPositions = (positions: any[], deviceType: string) => {
     return positions.filter((position) => position.deviceType === deviceType);
-  };
-
-  const toggleCollapse = () => {
-    animate(
-      scope.current,
-      { rotate: isCollapsed ? [0, 60] : [60, 0] },
-      { duration: 0.3 }
-    );
-    setIsCollapsed(!isCollapsed);
   };
 
   useEffect(() => {
