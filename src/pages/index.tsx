@@ -28,9 +28,21 @@ export default function Home() {
         </p>
         <hr className="w-screen border-1 border-black my-4" />
         <div className="mt-4 mb-4 md:mt-4 flex flex-col items-start justify-left">
-          <ExperimentTile name="experiment 1" path="/experiment-number" />
-          <ExperimentTile name="experiment 2" path="/experiment-click" />
-          <ExperimentTile name="experiment 3" path="/experiment-word" />
+          <ExperimentTile
+            name="pick a number"
+            path="/experiment-number"
+            icon="/icon-1.svg"
+          />
+          <ExperimentTile
+            name="click somewhere"
+            path="/experiment-click"
+            icon="/icon-2.svg"
+          />
+          <ExperimentTile
+            name="choose a word"
+            path="/experiment-word"
+            icon="/icon-3.svg"
+          />
         </div>
       </main>
     </Fragment>
