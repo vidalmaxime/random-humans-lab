@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
+import { haasgrotdisp } from "@/styles/fonts";
+
 export default function VizQuestion({
   send,
   setUserSkippedToResults,
@@ -94,25 +96,27 @@ export default function VizQuestion({
           autoFocus={true}
         />
         <motion.button
-          className="bg-black text-white rounded-md p-2 ml-2 my-2"
+          className={`bg-black text-white rounded-md p-2 ml-2 my-2 ${haasgrotdisp.className}`}
           onClick={handleSubmit}
           whileHover={{
             scale: 1.1,
           }}
         >
-          Submit
+          SUBMIT
         </motion.button>
       </div>
       {warningGiveNumber && (
         <p className="text-red-500">Please enter a valid number</p>
       )}
-      <motion.div
-        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
+      {/* <motion.div
+        className={`mt-4 cursor-pointer flex flex-row  opacity-70 ${haasgrotdisp.className}`}
         onClick={skipToResults}
         whileHover={{ opacity: 1 }}
       >
-        <h2 className="text-lg text-green-500">skip to results</h2>
-      </motion.div>
+        <h2 className="text-lg text-gray-700 text-start">
+          Or skip to results if you've already answered.
+        </h2>
+      </motion.div> */}
     </div>
   );
 }

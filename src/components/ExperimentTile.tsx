@@ -9,7 +9,10 @@ export default function ExperimentTile({
   icon,
 }: ExperimentTileProps) {
   return (
-    <motion.div whileHover={{ scale: 1.1 }} className="mb-2">
+    <motion.div
+      whileHover={{ scale: 1.1, translateX: 20, rotate: -2 }}
+      className="mb-2"
+    >
       <Link className="flex items-center justify-center" href={path}>
         <Image
           src={icon}

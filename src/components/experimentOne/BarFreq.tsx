@@ -45,7 +45,7 @@ export default function BarFreq({
           margin={{
             top: 5,
             right: 30,
-            left: 20,
+            left: -20,
             bottom: 5,
           }}
         >
@@ -59,7 +59,7 @@ export default function BarFreq({
           <Bar
             dataKey={yDataKey}
             fill="#FFFFFF"
-            fillOpacity={0.6}
+            fillOpacity={0.9}
             stroke="#000000"
             strokeWidth={1}
             label={false}

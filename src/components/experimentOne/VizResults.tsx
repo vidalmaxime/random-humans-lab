@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useAnimate, motion, AnimatePresence } from "framer-motion";
 
 import { auth, db } from "../../../firebase";
+import { haasgrotdisp } from "@/styles/fonts";
 import BarFreq from "./BarFreq";
 import DensityLog from "./DensityLog";
 
@@ -146,10 +147,10 @@ export default function VizResults() {
   };
 
   return (
-    <div className="text-black flex flex-col items-center w-full mb-32">
+    <div className="text-gray-800 flex flex-col items-center w-full mb-32">
       {userAnswer !== -1 && userAnswer !== Infinity ? (
-        <h1 className="mb-4 text-xl">
-          you picked {userAnswer},{" "}
+        <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
+          You picked {userAnswer},{" "}
           {userAnswerCount === 1
             ? `it’s the first time this number has been chosen out of
             ${totalPicks}
@@ -161,15 +162,15 @@ export default function VizResults() {
             picks`}
         </h1>
       ) : userAnswer === Infinity ? (
-        <h1 className="mb-4 text-xl">
-          you overflowed into infinity,{" "}
+        <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
+          You overflowed into infinity,{" "}
           {userAnswerCount === 1
             ? `it’s the first time this happened out of ${totalPicks} picks`
             : `this is the ${userAnswerCount}th time it happens out of ${totalPicks} picks`}
         </h1>
       ) : (
-        <h1 className="mb-4 text-xl">
-          there has been {totalPicks} total picks
+        <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
+          There has been {totalPicks} total picks
         </h1>
       )}
 
@@ -179,14 +180,16 @@ export default function VizResults() {
         yDataKey="count"
       />
 
-      <p className="text-black mb-2 mt-4">
-        This experiment is heavily inspired by David Chalmers&apos; original{" "}
+      <p
+        className={`text-gray-800 mb-2 mt-4 text-xl ${haasgrotdisp.className}`}
+      >
+        This experiment is heavily inspired by David Chalmers&apos;{" "}
         <a
           target="_blank"
           href="https://consc.net/notes/pick-a-number.html"
-          className="text-white"
+          className="text-gray-500"
         >
-          experiment
+          original experiment
         </a>
         .
       </p>
@@ -196,7 +199,7 @@ export default function VizResults() {
         onClick={toggleCollapse}
         whileHover={{ opacity: 1 }}
       >
-        <h2 className="text-lg text-white">
+        <h2 className="text-lg text-gray-500">
           click here for other data visualizations
         </h2>
         <div className="ml-2" ref={scope}>
