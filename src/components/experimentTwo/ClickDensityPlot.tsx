@@ -136,12 +136,10 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
 
         let positionMultiplier;
         if (userDeviceType == "mobile") {
-          positionMultiplier = [2, 4];
+          positionMultiplier = [2.5, 4];
         } else {
-          positionMultiplier = [4, 2];
+          positionMultiplier = [4, 1.9];
         }
-
-        let mobilePositions = {};
 
         positions.push(
           xNormalized * positionMultiplier[0] - width / 2,
@@ -150,7 +148,16 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
         );
 
         const color = new THREE.Color();
-        color.setHSL(0.6 - normalizedDensity * 0.6, 1.0, 0.5);
+        color.setHSL(
+          0, // Hue for red
+          normalizedDensity, // Interpolate saturation between gray (0) and red (1)
+          (1 - normalizedDensity) * 0.5 + normalizedDensity * 0.5 // Interpolate lightness. Adjust as required.
+        );
+        // color.setHSL(
+        //   (1 - normalizedDensity) * 0.6139 + normalizedDensity * 0.9639,
+        //   (1 - normalizedDensity) * 0.39 + normalizedDensity * 0.77,
+        //   (1 - normalizedDensity) * 0.11 + normalizedDensity * 0.5
+        // );
         colors.push(color.r, color.g, color.b);
       }
     }
@@ -192,8 +199,9 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
     0.0001,
     100
   );
-  camera.position.z = 3; // Set the camera's position
-  camera.position.y = 3;
+  camera.position.z = 2; // Set the camera's position
+  camera.position.y = 2.1;
+  camera.position.x = -0.1;
 
   return (
     <Canvas className="w-full h-full" camera={camera}>

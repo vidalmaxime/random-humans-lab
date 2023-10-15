@@ -80,7 +80,7 @@ export default function VizResults() {
         )}
       </div>
       {!model ? (
-        <div className="w-ful flex flex-col items-center">
+        <div className="w-full flex flex-col justify-center items-center">
           Embedding model is loading...
         </div>
       ) : (

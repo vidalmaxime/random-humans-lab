@@ -93,7 +93,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center">
-      {loadingEmbeddings && <div>Embeddings are loading...</div>}
+      {loadingEmbeddings && <p>Embeddings are loading...</p>}
       {!loadingEmbeddings && projectionData.length === 0 && (
         <button
           className="bg-gray-700 hover:bg-gray-900 text-white mb-4 py-2 px-4 rounded-md"

@@ -50,8 +50,12 @@ export default function VizResults(userDeviceType: string) {
       className="text-black flex flex-col items-center w-full h-5/6  md:mt-6"
       ref={parentRef}
     >
-      <p className="flex items-left text-left w-full">
-        Density function of all {positions.length} clicks
+      <p className="flex items-center text-center justify-center w-full mb-8">
+        Density function of all{" "}
+        {userDeviceType == "mobile"
+          ? mobilePositions.length
+          : desktopPositions.length}{" "}
+        {userDeviceType == "mobile" ? "phone" : "large screen"} clicks
       </p>
       <div className="text-black flex flex-col items-center w-full h-full mt-2">
         <ClickDensityPlot
