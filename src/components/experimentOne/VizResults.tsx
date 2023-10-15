@@ -147,7 +147,7 @@ export default function VizResults() {
   };
 
   return (
-    <div className="text-gray-800 flex flex-col items-center w-full mb-32">
+    <div className="text-gray-800 flex flex-col items-start w-full mb-32">
       {userAnswer !== -1 && userAnswer !== Infinity ? (
         <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
           You picked {userAnswer},{" "}
@@ -181,7 +181,7 @@ export default function VizResults() {
       />
 
       <p
-        className={`text-gray-800 mb-2 mt-4 text-xl ${haasgrotdisp.className}`}
+        className={`text-gray-800 mb-2 mt-4 text-md items-center ${haasgrotdisp.className}`}
       >
         This experiment is heavily inspired by David Chalmers&apos;{" "}
         <a
@@ -195,14 +195,14 @@ export default function VizResults() {
       </p>
 
       <motion.div
-        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
+        className="mt-12 cursor-pointer flex flex-row items-start opacity-70"
         onClick={toggleCollapse}
         whileHover={{ opacity: 1 }}
       >
-        <h2 className="text-lg text-gray-500">
+        <h2 className={`text-xl text-gray-500   ${haasgrotdisp.className}`}>
           click here for other data visualizations
         </h2>
-        <div className="ml-2" ref={scope}>
+        <div className="ml-2 pt-2" ref={scope}>
           <Image src="/chevron-down.svg" alt="chevron" width={16} height={16} />
         </div>
       </motion.div>

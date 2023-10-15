@@ -40,12 +40,9 @@ export default function Header({ title }: { title: string }) {
           <span
             key={index}
             style={{
-              color: colors[index] === "accent" ? "#1f2937" : "#6b7280", // using hex codes
+              color: colors[index] === "accent" ? "#e11d48" : "#111827", // using hex codes
               transition: "ease-in 300ms",
             }}
-            // className={`text-${
-            //   colors[index] || "black"
-            // } transition ease-in delay-200 duration-500	`}
           >
             {word}{" "}
           </span>

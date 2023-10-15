@@ -16,17 +16,17 @@ export default function Home() {
     <Fragment>
       <Meta />
 
-      <main className="flex min-h-screen flex-col items-start p-4 w-screen">
+      <main className="flex min-h-screen flex-col items-start p-4 w-full">
         <Header title="random humans lab" />
         {/* Add a thin line  */}
-        <hr className="w-screen border-1 border-black my-4" />
+        <hr className="w-screen -mx-4 border-1 border-black my-4" />
         <p
           className={`${haasgrotdisp.className} my-4 w-full text-left text-3xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700`}
         >
           Collecting empirical evidence regarding the deterministic nature of
           what seems to be randomness.
         </p>
-        <hr className="w-screen border-1 border-black my-4" />
+        <hr className="w-screen -mx-4 border-1 border-black my-4" />
         <div className="mt-4 mb-4 md:mt-4 flex flex-col items-start justify-left">
           <ExperimentTile
             name="pick a number"
