@@ -14,7 +14,7 @@ export default function ExperimentTile({ name, path }: ExperimentTileProps) {
           height={36}
           className="mr-4"
         />
-        <p className="text text-white text-2xl"> {name}</p>
+        <p className="text text-black text-2xl"> {name}</p>
       </Link>
     </motion.div>
   );
