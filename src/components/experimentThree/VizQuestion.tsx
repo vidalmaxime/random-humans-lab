@@ -30,8 +30,9 @@ export default function VizQuestion({
       return;
     } else {
       // make the word lowercase
-      send(word.toLowerCase());
+      console.log(word.toLowerCase());
       setSubmitted(true);
+      send(word.toLowerCase());
     }
   };
 

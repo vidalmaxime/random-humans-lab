@@ -17,7 +17,7 @@ export default function Home() {
 
       <main className="flex min-h-screen flex-col items-center p-4">
         <Header title="random humans lab" />
-        <p className="mt-4 w-full text-center text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-purple-700 to-transparent italic">
+        <p className=" mt-4 w-full text-center text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-purple-700 to-transparent">
           Collecting empirical evidence regarding the deterministic nature of
           what seems to be randomness.
         </p>
