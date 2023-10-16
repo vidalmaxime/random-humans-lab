@@ -5,6 +5,7 @@ import { auth } from "../../firebase";
 import ExperimentTile from "@/components/ExperimentTile";
 import Header from "@/components/Header";
 import Meta from "@/components/Meta";
+import { haasgrotdisp } from "@/styles/fonts";
 
 export default function Home() {
   useEffect(() => {
@@ -15,16 +16,34 @@ export default function Home() {
     <Fragment>
       <Meta />
 
-      <main className="flex min-h-screen flex-col items-center p-4">
+      <main className="flex min-h-screen flex-col items-start p-4 w-full">
         <Header title="random humans lab" />
-        <p className="mt-4 w-full text-center text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-purple-700 to-transparent italic">
+        {/* Add a thin line  */}
+        <hr className="w-screen -mx-4 border-1 border-black my-4" />
+        <p
+          className={`${haasgrotdisp.className} my-4 w-full text-left text-3xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700`}
+        >
           Collecting empirical evidence regarding the deterministic nature of
-          what seems to be randomness.
+          what seems to be{" "}
+          <span className=" underline decoration-rose-600">randomness</span>.
         </p>
-        <div className="mt-4 mb-4 md:mt-16 flex flex-col items-start">
-          <ExperimentTile name="experiment 1" path="/experiment-number" />
-          <ExperimentTile name="experiment 2" path="/experiment-click" />
-          <ExperimentTile name="experiment 3" path="/experiment-word" />
+        <hr className="w-screen -mx-4 border-1 border-black my-4" />
+        <div className="mt-4 mb-4 md:mt-4 flex flex-col items-start justify-left">
+          <ExperimentTile
+            name="pick a number"
+            path="/experiment-number"
+            icon="/icon-1.svg"
+          />
+          <ExperimentTile
+            name="click somewhere"
+            path="/experiment-click"
+            icon="/icon-2.svg"
+          />
+          <ExperimentTile
+            name="choose a word"
+            path="/experiment-word"
+            icon="/icon-3.svg"
+          />
         </div>
       </main>
     </Fragment>

@@ -1,4 +1,7 @@
 import { Nanum_Myeongjo } from "next/font/google";
+import localFont from "next/font/local";
+
+const haasgrotdisp = localFont({ src: "./HaasGrotDisp-55Roman.ttf" });
 
 // define your variable fonts
 const nanumMyeongjo = Nanum_Myeongjo({
@@ -7,4 +10,4 @@ const nanumMyeongjo = Nanum_Myeongjo({
   variable: "--font-nanum",
 });
 
-export { nanumMyeongjo };
+export { nanumMyeongjo, haasgrotdisp };

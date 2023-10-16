@@ -10,6 +10,9 @@ interface TSNEVisualizerProps {
   model: any;
   allAnswers: any[];
   userAnswer: string;
+  selectedWord: string;
+  projectionData: number[][];
+  setProjectionData: React.Dispatch<React.SetStateAction<number[][]>>;
 }
 
 const Plot = dynamic(() => import("react-plotly.js"), {
@@ -21,8 +24,10 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
   model,
   allAnswers,
   userAnswer,
+  selectedWord,
+  projectionData,
+  setProjectionData,
 }) => {
-  const [projectionData, setProjectionData] = useState<number[][]>([]);
   const [screenWidth, setScreenWidth] = useState<number>(0); // Initialize with 0, then update after mount
   const [loadingEmbeddings, setLoadingEmbeddings] = useState<boolean>(false);
 
@@ -71,7 +76,7 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
         let generator = new druid.TSNE(embeddings.arraySync()).generator();
         for (const Y of generator) {
           setProjectionData(Y);
-          await new Promise((resolve) => setTimeout(resolve, 100)); // delay of 100ms
+          await new Promise((resolve) => setTimeout(resolve, 100)); // Delay of 100ms for rerendering
         }
       });
     }
@@ -85,18 +90,25 @@ const TSNEVisualizer: React.FC<TSNEVisualizerProps> = ({
     text: allAnswers,
     marker: {
       color: allAnswers.map((answer) =>
-        answer === userAnswer ? "red" : "black"
-      ), // color points based on the user's answer
+        answer === selectedWord
+          ? "#10b981"
+          : answer === userAnswer
+          ? "#e11d48"
+          : "black"
+      ), // Color points based on the user's answer
     },
     hoverinfo: "text",
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
-      {loadingEmbeddings && <div>Embeddings are loading...</div>}
+    <div
+      className="w-full h-full flex flex-col justify-center items-center"
+      id="tsneVisualizer"
+    >
+      {loadingEmbeddings && <p>Embeddings are loading...</p>}
       {!loadingEmbeddings && projectionData.length === 0 && (
         <button
-          className="bg-black text-white mb-4 py-2 px-4 rounded-full"
+          className="bg-gray-700 hover:bg-gray-900 text-white mb-4 py-2 px-4 rounded-md"
           onClick={encodeWords}
         >
           Compute tSNE embeddings

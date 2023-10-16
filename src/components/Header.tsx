@@ -11,8 +11,9 @@ export default function Header({ title }: { title: string }) {
     // Generate random colors upon component mount
     const generatedColors = title
       .split(" ")
-      .map(() => (Math.random() < 0.5 ? "white" : "black"));
+      .map(() => (Math.random() < 0.5 ? "black" : "accent"));
     setColors(generatedColors);
+    console.log(generatedColors);
   }, [title]);
 
   return (
@@ -38,9 +39,10 @@ export default function Header({ title }: { title: string }) {
         {title.split(" ").map((word, index) => (
           <span
             key={index}
-            className={`text-${
-              colors[index] || "black"
-            } transition ease-in delay-200 duration-500	`}
+            style={{
+              color: colors[index] === "accent" ? "#e11d48" : "#111827", // using hex codes
+              transition: "ease-in 300ms",
+            }}
           >
             {word}{" "}
           </span>

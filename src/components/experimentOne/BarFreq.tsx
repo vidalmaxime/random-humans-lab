@@ -37,7 +37,7 @@ export default function BarFreq({
   };
 
   return (
-    <div className="mt-16 flex flex-col items-center w-full">
+    <div className="mt-8 flex flex-col items-center w-full">
       <h1 className="text font-bold mb-4">{title}</h1>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
@@ -45,7 +45,7 @@ export default function BarFreq({
           margin={{
             top: 5,
             right: 30,
-            left: 20,
+            left: 0,
             bottom: 5,
           }}
         >
@@ -58,8 +58,8 @@ export default function BarFreq({
           />
           <Bar
             dataKey={yDataKey}
-            fill="#FFFFFF"
-            fillOpacity={0.6}
+            fill="#e11d48"
+            fillOpacity={1}
             stroke="#000000"
             strokeWidth={1}
             label={false}

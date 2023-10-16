@@ -3,17 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 3 199 87;
-  --background-start-rgb: 3 199 87;
-  --background-end-rgb: 3 199 87;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 3 199 87;
-    --background-start-rgb: 3 199 87;
-    --background-end-rgb: 3 199 87;
-  }
+  --background-start-rgb: 247 247 247;
+  --background-end-rgb: 250 250 250;
+  --p: 347 77% 50%;
+  --pc: 0 0% 0%;
 }
 
 body {
@@ -24,4 +17,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+::selection {
+  color: hsl(var(--pc));
+  background: hsl(var(--p));
 }
