@@ -1,4 +1,4 @@
-# random human labs
+# random humans lab
 
 Let's find the human random seed
 
