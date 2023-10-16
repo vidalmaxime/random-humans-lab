@@ -69,7 +69,7 @@ export default function VizResults() {
         {userAnswer !== "" ? (
           <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
             You picked {userAnswer},{" "}
-            {userAnswerCount === 0
+            {userAnswerCount === 1
               ? `it’s the first time this word has been chosen out of
             ${totalPicks}
              picks`
@@ -77,7 +77,7 @@ export default function VizResults() {
             ${userAnswerCount} 
             times out of
             ${totalPicks} 
-            other picks`}
+            picks`}
           </h1>
         ) : (
           <h1 className={`mb-4 text-3xl md:text-6xl ${haasgrotdisp.className}`}>
