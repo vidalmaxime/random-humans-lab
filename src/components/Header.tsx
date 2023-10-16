@@ -23,7 +23,8 @@ export default function Header({ title }: { title: string }) {
       </Head>
       <motion.div
         whileHover={{
-          scale: 1.1,
+          scale: 1,
+          rotate: 90,
         }}
       >
         <Link href="/">

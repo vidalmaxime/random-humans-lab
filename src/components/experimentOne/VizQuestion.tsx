@@ -3,10 +3,7 @@ import { motion } from "framer-motion";
 
 import { haasgrotdisp } from "@/styles/fonts";
 
-export default function VizQuestion({
-  send,
-  setUserSkippedToResults,
-}: VizQuestionProps) {
+export default function VizQuestion({ send }: VizQuestionProps) {
   const [number, setNumber] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [warningGiveNumber, setWarningGiveNumber] = useState(false);
@@ -80,10 +77,6 @@ export default function VizQuestion({
     }
   };
 
-  const skipToResults = () => {
-    setUserSkippedToResults(true);
-  };
-
   return (
     <div className="flex justify-center flex-col items-center w-full">
       <div className="flex justify-center flex-wrap items-center w-full">
@@ -108,20 +101,10 @@ export default function VizQuestion({
       {warningGiveNumber && (
         <p className="text-red-500">Please enter a valid number</p>
       )}
-      {/* <motion.div
-        className={`mt-4 cursor-pointer flex flex-row  opacity-70 ${haasgrotdisp.className}`}
-        onClick={skipToResults}
-        whileHover={{ opacity: 1 }}
-      >
-        <h2 className="text-lg text-gray-700 text-start">
-          Or skip to results if you've already answered.
-        </h2>
-      </motion.div> */}
     </div>
   );
 }
 
 type VizQuestionProps = {
   send: (number: number, numberFactors: number) => void;
-  setUserSkippedToResults: (skipped: boolean) => void;
 };
