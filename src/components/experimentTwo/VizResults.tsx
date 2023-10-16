@@ -3,8 +3,13 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 
 import ClickDensityPlot from "./ClickDensityPlot";
+import { type } from "os";
 
-export default function VizResults(userDeviceType: string) {
+type VizResultsProps = {
+  userDeviceType: string;
+};
+
+export default function VizResults({ userDeviceType }: VizResultsProps) {
   const [userPosition, setUserPosition] = useState({
     x: 0,
     y: 0,

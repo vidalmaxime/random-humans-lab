@@ -149,15 +149,11 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
 
         const color = new THREE.Color();
         color.setHSL(
-          0, // Hue for red
-          normalizedDensity, // Interpolate saturation between gray (0) and red (1)
-          (1 - normalizedDensity) * 0.5 + normalizedDensity * 0.5 // Interpolate lightness. Adjust as required.
+          0,
+          normalizedDensity,
+          (1 - normalizedDensity) * 0.5 + normalizedDensity * 0.5
         );
-        // color.setHSL(
-        //   (1 - normalizedDensity) * 0.6139 + normalizedDensity * 0.9639,
-        //   (1 - normalizedDensity) * 0.39 + normalizedDensity * 0.77,
-        //   (1 - normalizedDensity) * 0.11 + normalizedDensity * 0.5
-        // );
+
         colors.push(color.r, color.g, color.b);
       }
     }
