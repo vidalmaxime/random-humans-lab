@@ -66,6 +66,7 @@ export default function VizResults({ userDeviceType }: VizResultsProps) {
         <ClickDensityPlot
           data={userDeviceType == "mobile" ? mobilePositions : desktopPositions}
           userDeviceType={userDeviceType}
+          userPosition={userPosition}
         />
       </div>
     </div>

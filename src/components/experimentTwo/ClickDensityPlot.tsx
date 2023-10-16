@@ -1,17 +1,14 @@
 import React, { useMemo } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { Text } from "@react-three/drei";
-
-import { extend } from "@react-three/fiber";
+import { Canvas, extend } from "@react-three/fiber";
+import { OrbitControls, Image } from "@react-three/drei";
 import { BufferGeometry } from "three";
 import * as THREE from "three";
-
 extend({ BufferGeometry });
 
 type ClickDensityPlotProps = {
   data: Array<{ x: number; y: number }>;
   userDeviceType: string;
+  userPosition: { x: number; y: number };
 };
 
 type ClickData = {
@@ -24,6 +21,7 @@ const GRID_SIZE = 50;
 const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
   data,
   userDeviceType,
+  userPosition,
 }) => {
   function createHistogram(data: ClickData, gridSize: number): number[][] {
     const histogram = Array.from({ length: gridSize }, () =>
@@ -77,18 +75,6 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
   function gaussian1D(distance: number, sigma: number = 0.3) {
     return Math.exp(-Math.pow(distance, 2) / (2 * sigma * sigma));
   }
-
-  // function gaussian(
-  //   x: number,
-  //   y: number,
-  //   cx: number,
-  //   cy: number,
-  //   sigma: number = 0.3
-  // ) {
-  //   const dx = x - cx;
-  //   const dy = y - cy;
-  //   return Math.exp(-(dx * dx + dy * dy) / (2 * sigma * sigma));
-  // }
 
   function createAdjustedBufferGeometry(
     width: number,
@@ -203,6 +189,24 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
     <Canvas className="w-full h-full" camera={camera}>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
+
+      <mesh
+        key={0}
+        position={[
+          userPosition.x * 4 - 2, // Scale and translate the x-coordinate
+          0.5, // Slightly above the heatmap for visibility
+          userPosition.y * 1.9 - 1, // Scale and translate the y-coordinate
+        ]}
+      >
+        <sphereGeometry attach="geometry" args={[0.03, 16, 16]} />
+        <Image
+          position={[0, 0.1, 0]}
+          url="/click-icon.svg"
+          transparent
+          scale={0.15}
+        ></Image>
+        <meshStandardMaterial attach="material" color="black" />
+      </mesh>
 
       <mesh position={[-1.5, -0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <primitive attach="geometry" object={geometry} />
