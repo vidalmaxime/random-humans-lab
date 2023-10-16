@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
+
 require("@tensorflow/tfjs");
 import { UniversalSentenceEncoder } from "@tensorflow-models/universal-sentence-encoder";
 import * as use from "@tensorflow-models/universal-sentence-encoder";
@@ -14,6 +15,9 @@ export default function VizResults() {
   const [userAnswerCount, setUserAnswerCount] = useState(0);
   const [allAnswers, setAllAnswers] = useState<any>([]);
   const [totalPicks, setTotalPicks] = useState(0);
+  const [selectedWord, setSelectedWord] = useState("");
+  const [projectionData, setProjectionData] = useState<number[][]>([]);
+
   const [model, setModel] = useState<null | UniversalSentenceEncoder>(null);
 
   useEffect(() => {
@@ -89,6 +93,9 @@ export default function VizResults() {
             model={model}
             allAnswers={allAnswers}
             userAnswer={userAnswer}
+            selectedWord={selectedWord}
+            projectionData={projectionData}
+            setProjectionData={setProjectionData}
           />
         </div>
       )}
@@ -102,9 +109,25 @@ export default function VizResults() {
         {allAnswers.map((word: string, index: number) => (
           <p
             key={index}
+            onClick={() => {
+              if (projectionData && projectionData.length > 0) {
+                setSelectedWord(word);
+                document.getElementById("tsneVisualizer")?.scrollIntoView();
+              }
+            }}
             className={`${
-              word === userAnswer ? "text-rose-600" : "text-gray-700"
+              word === userAnswer
+                ? "text-rose-600"
+                : word === selectedWord
+                ? "text-green-600"
+                : "text-gray-700"
             } ${nanumMyeongjo.className} text-xl md:text-2xl`}
+            style={{
+              cursor:
+                projectionData && projectionData.length > 0
+                  ? "pointer"
+                  : "default",
+            }}
           >
             {word}
           </p>

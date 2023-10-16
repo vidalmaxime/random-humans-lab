@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function VizQuestion({
-  send,
-  setUserSkippedToResults,
-}: VizQuestionProps) {
+import { haasgrotdisp } from "@/styles/fonts";
+
+export default function VizQuestion({ send }: VizQuestionProps) {
   const [word, setWord] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
   const [warningGiveWord, setWarningGiveWord] = useState(false);
@@ -36,10 +35,6 @@ export default function VizQuestion({
     }
   };
 
-  const skipToResults = () => {
-    setUserSkippedToResults(true);
-  };
-
   return (
     <div className="flex justify-center flex-col items-center w-full">
       <div className="flex justify-center flex-wrap items-center w-full">
@@ -52,30 +47,22 @@ export default function VizQuestion({
           autoFocus={true}
         />
         <motion.button
-          className="bg-black text-white rounded-md p-2 ml-2 my-2"
+          className={`bg-black text-white rounded-md p-2 ml-2 my-2 ${haasgrotdisp.className}`}
           onClick={handleSubmit}
           whileHover={{
             scale: 1.1,
           }}
         >
-          Submit
+          SUBMIT
         </motion.button>
       </div>
       {warningGiveWord && (
         <p className="text-red-500">Please enter a valid word</p>
       )}
-      <motion.div
-        className="mt-12 cursor-pointer flex flex-row items-center opacity-70"
-        onClick={skipToResults}
-        whileHover={{ opacity: 1 }}
-      >
-        <h2 className="text-lg text-green-500">skip to results</h2>
-      </motion.div>
     </div>
   );
 }
 
 type VizQuestionProps = {
   send: (word: string) => void;
-  setUserSkippedToResults: (skipped: boolean) => void;
 };
