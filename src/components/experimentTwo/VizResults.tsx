@@ -3,7 +3,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 
 import ClickDensityPlot from "./ClickDensityPlot";
-import { type } from "os";
 
 type VizResultsProps = {
   userDeviceType: string;
@@ -14,7 +13,6 @@ export default function VizResults({ userDeviceType }: VizResultsProps) {
     x: 0,
     y: 0,
   });
-  const [positions, setPositions] = useState([]);
   const [mobilePositions, setMobilePositions] = useState<any[]>([]);
   const [desktopPositions, setDesktopPositions] = useState<any[]>([]);
   const parentRef = useRef(null);
@@ -41,7 +39,6 @@ export default function VizResults({ userDeviceType }: VizResultsProps) {
         getDoc(docRef).then((doc) => {
           if (doc.exists()) {
             const positions = doc.data().positions;
-            setPositions(positions);
             setMobilePositions(filterPositions(positions, "mobile"));
             setDesktopPositions(filterPositions(positions, "computer"));
           }
@@ -64,7 +61,9 @@ export default function VizResults({ userDeviceType }: VizResultsProps) {
       </p>
       <div className="text-black flex flex-col items-center w-full h-full mt-2">
         <ClickDensityPlot
-          data={userDeviceType == "mobile" ? mobilePositions : desktopPositions}
+          data={
+            userDeviceType === "mobile" ? mobilePositions : desktopPositions
+          }
           userDeviceType={userDeviceType}
           userPosition={userPosition}
         />

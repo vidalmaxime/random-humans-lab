@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Canvas, extend } from "@react-three/fiber";
 import { OrbitControls, Image } from "@react-three/drei";
 import { BufferGeometry } from "three";
@@ -17,12 +17,18 @@ type ClickData = {
 }[];
 
 const GRID_SIZE = 50;
+const WIDTH = 1;
+const HEIGHT = 1;
 
 const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
   data,
   userDeviceType,
   userPosition,
 }) => {
+  const [positionMultiplier, setPositionMultiplier] = useState<number[]>([
+    1, 1,
+  ]);
+
   function createHistogram(data: ClickData, gridSize: number): number[][] {
     const histogram = Array.from({ length: gridSize }, () =>
       Array(gridSize).fill(0)
@@ -106,6 +112,14 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
     const positions = [];
     const colors = [];
 
+    let devicePositionMultiplier;
+    if (userDeviceType === "mobile") {
+      devicePositionMultiplier = [2.5, 4];
+    } else {
+      devicePositionMultiplier = [4, 1.9];
+    }
+    setPositionMultiplier(devicePositionMultiplier);
+
     for (let iy = 0; iy <= heightSegments; iy++) {
       const yNormalized = iy / heightSegments;
       for (let ix = 0; ix <= widthSegments; ix++) {
@@ -120,16 +134,9 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
         const normalizedDensity =
           (rawDensity - minDensity) / (maxDensity - minDensity);
 
-        let positionMultiplier;
-        if (userDeviceType == "mobile") {
-          positionMultiplier = [2.5, 4];
-        } else {
-          positionMultiplier = [4, 1.9];
-        }
-
         positions.push(
-          xNormalized * positionMultiplier[0] - width / 2,
-          yNormalized * positionMultiplier[1] - height / 2,
+          xNormalized * positionMultiplier[0],
+          -yNormalized * positionMultiplier[1],
           normalizedDensity
         );
 
@@ -176,14 +183,17 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
   }, [data]);
 
   const camera = new THREE.PerspectiveCamera(
-    35,
+    userDeviceType === "mobile" ? 75 : 35,
     window.innerWidth / window.innerHeight,
     0.0001,
     100
   );
-  camera.position.z = 2; // Set the camera's position
-  camera.position.y = 2.1;
-  camera.position.x = -0.1;
+
+  const isMobile = userDeviceType === "mobile";
+  camera.fov = isMobile ? 45 : 15;
+  camera.position.x = isMobile ? 0 : 0;
+  camera.position.y = isMobile ? -9 : -8;
+  camera.position.z = isMobile ? 2 : 3;
 
   return (
     <Canvas className="w-full h-full" camera={camera}>
@@ -193,10 +203,13 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
       <mesh
         key={0}
         position={[
-          userPosition.x * 4 - 2, // Scale and translate the x-coordinate
-          0.5, // Slightly above the heatmap for visibility
-          userPosition.y * 1.9 - 1, // Scale and translate the y-coordinate
+          isMobile
+            ? userPosition.x * positionMultiplier[0] - 1.3
+            : userPosition.x * positionMultiplier[0] - 2, // Scale and translate the x-coordinate
+          -userPosition.y * positionMultiplier[1], // Scale and translate the y-coordinate
+          0.7, // Slightly above the heatmap for visibility
         ]}
+        rotation={[Math.PI / 2, 0, 0]}
       >
         <sphereGeometry attach="geometry" args={[0.03, 16, 16]} />
         <Image
@@ -208,7 +221,7 @@ const ClickDensityPlot: React.FC<ClickDensityPlotProps> = ({
         <meshStandardMaterial attach="material" color="black" />
       </mesh>
 
-      <mesh position={[-1.5, -0.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      <mesh position={[isMobile ? -1.3 : -2, 0, 0]} rotation={[0, 0, 0]}>
         <primitive attach="geometry" object={geometry} />
         <meshStandardMaterial attach="material" vertexColors={true} />
       </mesh>
