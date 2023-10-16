@@ -24,7 +24,8 @@ export default function Home() {
           className={`${haasgrotdisp.className} my-4 w-full text-left text-3xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700`}
         >
           Collecting empirical evidence regarding the deterministic nature of
-          what seems to be randomness.
+          what seems to be{" "}
+          <span className=" underline decoration-rose-600">randomness</span>.
         </p>
         <hr className="w-screen -mx-4 border-1 border-black my-4" />
         <div className="mt-4 mb-4 md:mt-4 flex flex-col items-start justify-left">
