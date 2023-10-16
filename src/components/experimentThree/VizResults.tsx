@@ -84,7 +84,7 @@ export default function VizResults() {
         )}
       </div>
       {!model ? (
-        <div className="w-full flex flex-col justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center pb-8">
           Embedding model is loading...
         </div>
       ) : (
@@ -100,7 +100,7 @@ export default function VizResults() {
         </div>
       )}
       <div>
-        <h2 className="text-left text-start mt-2 font-mono">
+        <h2 className="text-left text-start mt-1 font-mono">
           The picked words are
         </h2>
       </div>
