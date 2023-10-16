@@ -45,8 +45,10 @@ export default function VizResults() {
     if (user) {
       const userdocRef = doc(db, "experiment_3", user.uid);
       getDoc(userdocRef).then((userDoc) => {
+        let tmpUserAnswer = "";
         if (userDoc.exists()) {
-          setUserAnswer(userDoc.data().answer);
+          tmpUserAnswer = userDoc.data().answer;
+          setUserAnswer(tmpUserAnswer);
         }
         const docRef = doc(db, "experiment_3", "general");
         getDoc(docRef).then((doc) => {
@@ -54,7 +56,7 @@ export default function VizResults() {
             const words = doc.data().answers;
             setAllAnswers(words);
             setTotalPicks(words.length);
-            setUserAnswerCount(countOccurrences(words, userAnswer));
+            setUserAnswerCount(countOccurrences(words, tmpUserAnswer));
           }
         });
       });
