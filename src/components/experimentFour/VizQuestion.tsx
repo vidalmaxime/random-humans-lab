@@ -19,7 +19,7 @@ export default function VizQuestion({ send }: VizQuestionProps) {
   return (
     <div className="flex justify-center flex-col items-center w-full">
       <div
-        className="flex justify-center flex-wrap items-center w-96 rounded-lg p-16"
+        className="flex justify-center flex-wrap items-center w-90 md:w-96 rounded-lg p-16"
         style={{ backgroundColor: hex }}
       >
         <Colorful
