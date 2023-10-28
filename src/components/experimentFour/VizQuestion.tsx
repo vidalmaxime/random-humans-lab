@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Colorful } from "@uiw/react-color";
+import Colorful from "@uiw/react-color-colorful";
 
 import { haasgrotdisp } from "@/styles/fonts";
 
