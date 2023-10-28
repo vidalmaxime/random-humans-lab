@@ -13,7 +13,6 @@ export default function Header({ title }: { title: string }) {
       .split(" ")
       .map(() => (Math.random() < 0.5 ? "black" : "accent"));
     setColors(generatedColors);
-    console.log(generatedColors);
   }, [title]);
 
   return (

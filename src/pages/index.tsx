@@ -48,6 +48,11 @@ export default function Home() {
             path="/experiment-word"
             icon="/icon-3.svg"
           />
+          <ExperimentTile
+            name="select a color"
+            path="/experiment-color"
+            icon="/icon-4.svg"
+          />
         </div>
       </main>
     </Fragment>
