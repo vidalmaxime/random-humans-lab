@@ -41,7 +41,7 @@ export default function VizResults() {
             You picked{" "}
             {
               <span
-                className={`w-8 px-7  h-8 rounded-md`}
+                className={` px-4 md:px-7  rounded-md`}
                 style={{ backgroundColor: userAnswer }}
               ></span>
             }
