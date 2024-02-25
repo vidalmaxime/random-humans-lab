@@ -89,6 +89,7 @@ export default function Experiment5() {
       // Create doc with user uid
       const docRef = doc(db, "experiment_5", user.uid);
       setDoc(docRef, { strokes: serializedStrokes });
+      setUserAlreadyAnswered(true);
     }
   }
 

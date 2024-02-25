@@ -79,6 +79,7 @@ export default function Experiment3() {
       // Create doc with user uid
       const docRef = doc(db, "experiment_3", user.uid);
       setDoc(docRef, { answer: word });
+      setUserAlreadyAnswered(true);
     }
   }
 

@@ -108,6 +108,7 @@ export default function Experiment2() {
         clientHeight: clientHeight,
         deviceType: deviceType,
       });
+      setUserAlreadyAnswered(true);
     }
   }
 
