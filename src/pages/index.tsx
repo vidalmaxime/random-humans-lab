@@ -58,6 +58,11 @@ export default function Home() {
             path="/experiment-draw"
             icon="/icon-5.svg"
           />
+          <ExperimentTile
+            name="make a sound"
+            path="/experiment-sound"
+            icon="/icon-6.svg"
+          />
         </div>
       </main>
     </Fragment>
