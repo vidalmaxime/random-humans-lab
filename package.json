@@ -21,6 +21,7 @@
     "@types/react-dom": "18.0.11",
     "@uiw/react-color-colorful": "^1.4.3",
     "@vercel/analytics": "^1.0.0",
+    "@xenova/transformers": "^2.15.1",
     "autoprefixer": "10.4.14",
     "d3": "^7.8.5",
     "eslint": "8.39.0",
