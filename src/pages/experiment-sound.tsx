@@ -58,6 +58,7 @@ export default function Experiment6() {
   }, []);
 
   async function sendAnswer(frequency: number) {
+    console.log(frequency);
     const user = auth.currentUser;
     if (user) {
       // Add to general doc containing array of all answers using arrayUnion

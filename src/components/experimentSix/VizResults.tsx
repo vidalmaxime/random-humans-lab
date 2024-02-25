@@ -56,9 +56,15 @@ export default function VizResults() {
     return noteStrings[noteIndex % 12];
   };
 
-  const frequencyFromNoteNumber = (note: number) => {
-    return 440 * Math.pow(2, (note - 69) / 12);
-  };
+  // const frequencyFromNoteNumber = (note: number) => {
+  //   return 440 * Math.pow(2, (note - 69) / 12);
+  // };
+
+  // const centsOffFromPitch = (frequency: number, note: number) => {
+  //   return Math.floor(
+  //     (1200 * Math.log(frequency / frequencyFromNoteNumber(note))) / Math.log(2)
+  //   );
+  // };
 
   // modified from https://github.com/cwilso/PitchDetect/tree/main
   const VOLUME_CURVE = [1.0, 0.61, 0.37, 0.22, 0.14, 0.08, 0.05, 0.0];
@@ -81,12 +87,6 @@ export default function VizResults() {
       duration
     );
   };
-
-  // const centsOffFromPitch = (frequency: number, note: number) => {
-  //   return Math.floor(
-  //     (1200 * Math.log(frequency / frequencyFromNoteNumber(note))) / Math.log(2)
-  //   );
-  // };
 
   return (
     <div className="text-black flex flex-col items-start w-full mb-32">

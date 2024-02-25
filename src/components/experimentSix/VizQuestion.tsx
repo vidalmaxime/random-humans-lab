@@ -86,6 +86,8 @@ const VizQuestion: React.FC<VizQuestionProps> = ({ send }) => {
     const context = await startAudioContext();
     if (!context) return;
 
+    let sendCalled = false;
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -109,6 +111,7 @@ const VizQuestion: React.FC<VizQuestionProps> = ({ send }) => {
       const frequencyThreshold = 10; // Frequency variation threshold
 
       const processAudio = () => {
+        if (sendCalled) return;
         analyser.getFloatTimeDomainData(dataArray);
         const frequency = autoCorrelate(dataArray, context.sampleRate);
         // console.log(frequency);
@@ -129,15 +132,19 @@ const VizQuestion: React.FC<VizQuestionProps> = ({ send }) => {
               // stop recording
               stream.getTracks().forEach((track) => track.stop());
               // Send the stable frequency average
-              send(
-                Math.round(
-                  frequencyHistory.reduce((a, b) => a + b, 0) / historySize
-                )
+              const avgFrequency = Math.round(
+                frequencyHistory.reduce((a, b) => a + b, 0) / historySize
               );
+              send(avgFrequency);
+              sendCalled = true;
             }
           }
         }
-        requestAnimationFrame(processAudio);
+
+        if (!sendCalled) {
+          // Continue processing only if send hasn't been called
+          requestAnimationFrame(processAudio);
+        }
       };
       processAudio();
     } catch (err) {
