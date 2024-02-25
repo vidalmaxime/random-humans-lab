@@ -16,7 +16,6 @@ interface Point {
 export default function Experiment5() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
-  const [userDeviceType, setUserDeviceType] = useState<string>("");
 
   const checkIfUserAlreadyAnswered = async () => {
     const user = await signInAnonymously(auth);
@@ -52,7 +51,6 @@ export default function Experiment5() {
           doc(db, "experiment_5", user.user.uid),
           (doc) => {
             if (doc.exists()) {
-              doc.data().deviceType && setUserDeviceType(doc.data().deviceType);
               setUserAlreadyAnswered(true);
             }
           }

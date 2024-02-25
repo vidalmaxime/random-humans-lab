@@ -31,8 +31,8 @@ export default function VizQuestion({ send }: VizQuestionProps) {
       const height = getComputedStyle(canvas)
         .getPropertyValue("height")
         .slice(0, -2);
-      canvas.width = width * ratio;
-      canvas.height = height * ratio;
+      canvas.width = parseInt(width) * ratio;
+      canvas.height = parseInt(height) * ratio;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.scale(ratio, ratio);

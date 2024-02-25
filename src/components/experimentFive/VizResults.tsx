@@ -11,8 +11,7 @@ export default function VizResults() {
   const [userStrokes, setUserStrokes] = useState<Point[][]>([]);
   const [allStrokes, setAllStrokes] = useState<Point[][][]>([]);
   const userCanvasRef = useRef<HTMLCanvasElement>(null);
-  const allCanvasRefs = useRef<HTMLCanvasElement[]>([]);
-
+  const allCanvasRefs = useRef<(HTMLCanvasElement | null)[]>([]);
   useEffect(() => {
     const user = auth.currentUser;
     if (user) {
@@ -21,7 +20,7 @@ export default function VizResults() {
         if (userDoc.exists()) {
           const tmpUserStrokesObject = userDoc.data().strokes;
           const strokesArray: Point[][] = Object.values(
-            tmpUserStrokesObject
+            tmpUserStrokesObject as Point[][]
           ).map((stroke) =>
             stroke.map((point) => ({ x: point.x * 0.2, y: point.y * 0.2 }))
           );
@@ -35,7 +34,7 @@ export default function VizResults() {
           for (let i = 0; i < tmpAllStrokes.length; i++) {
             const tmpAllStrokesObject = tmpAllStrokes[i];
             const strokesArray: Point[][] = Object.values(
-              tmpAllStrokesObject
+              tmpAllStrokesObject as Point[][]
             ).map((stroke) =>
               stroke.map((point) => ({ x: point.x * 0.2, y: point.y * 0.2 }))
             );
@@ -82,19 +81,21 @@ export default function VizResults() {
     const ctx = canvas?.getContext("2d");
     if (!ctx || strokes.length === 0) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (canvas) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const drawNextStroke = (index: number) => {
-      if (index >= strokes.length) return;
+      const drawNextStroke = (index: number) => {
+        if (index >= strokes.length) return;
 
-      drawStroke(ctx, strokes[index], 0);
+        drawStroke(ctx, strokes[index], 0);
 
-      setTimeout(() => {
-        drawNextStroke(index + 1);
-      }, strokes[index].length * 4 + 200);
-    };
+        setTimeout(() => {
+          drawNextStroke(index + 1);
+        }, strokes[index].length * 4 + 200);
+      };
 
-    drawNextStroke(0);
+      drawNextStroke(0);
+    }
   };
 
   useEffect(() => {
