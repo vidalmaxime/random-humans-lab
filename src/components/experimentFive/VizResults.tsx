@@ -22,7 +22,7 @@ export default function VizResults() {
           const strokesArray: Point[][] = Object.values(
             tmpUserStrokesObject as Point[][]
           ).map((stroke) =>
-            stroke.map((point) => ({ x: point.x * 0.2, y: point.y * 0.2 }))
+            stroke.map((point) => ({ x: point.x * 0.333, y: point.y * 0.333 }))
           );
           setUserStrokes(strokesArray);
         }
@@ -36,7 +36,10 @@ export default function VizResults() {
             const strokesArray: Point[][] = Object.values(
               tmpAllStrokesObject as Point[][]
             ).map((stroke) =>
-              stroke.map((point) => ({ x: point.x * 0.2, y: point.y * 0.2 }))
+              stroke.map((point) => ({
+                x: point.x * 0.333,
+                y: point.y * 0.333,
+              }))
             );
             tmpAllStrokes[i] = strokesArray;
           }
