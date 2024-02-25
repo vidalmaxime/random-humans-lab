@@ -8,14 +8,14 @@ import VizQuestion from "@/components/experimentSix/VizQuestion";
 import VizResults from "@/components/experimentSix/VizResults";
 import Header from "@/components/Header";
 
-export default function Experiment4() {
+export default function Experiment6() {
   const [userAlreadyAnswered, setUserAlreadyAnswered] = useState(false);
   const [loadingVerification, setLoadingVerification] = useState(true);
 
   const checkIfUserAlreadyAnswered = async () => {
     const user = await signInAnonymously(auth);
     if (user) {
-      const docRef = doc(db, "experiment_4", user.user.uid);
+      const docRef = doc(db, "experiment_6", user.user.uid);
       getDoc(docRef).then((doc) => {
         if (doc.exists()) {
           setUserAlreadyAnswered(true);
