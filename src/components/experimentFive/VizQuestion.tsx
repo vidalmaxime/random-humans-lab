@@ -43,6 +43,24 @@ export default function VizQuestion({ send }: VizQuestionProps) {
     }
   }, []);
 
+  useEffect(() => {
+    const preventTouchMove = (e: TouchEvent) => {
+      if (isDrawing) {
+        e.preventDefault();
+      }
+    };
+
+    if (isDrawing) {
+      document.addEventListener("touchmove", preventTouchMove, {
+        passive: false,
+      });
+    }
+
+    return () => {
+      document.removeEventListener("touchmove", preventTouchMove);
+    };
+  }, [isDrawing]);
+
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = e.nativeEvent;
     setIsDrawing(true);
