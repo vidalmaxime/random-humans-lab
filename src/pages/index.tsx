@@ -53,6 +53,11 @@ export default function Home() {
             path="/experiment-color"
             icon="/icon-4.svg"
           />
+          <ExperimentTile
+            name="draw something"
+            path="/experiment-draw"
+            icon="/icon-5.svg"
+          />
         </div>
       </main>
     </Fragment>
