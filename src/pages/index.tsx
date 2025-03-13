@@ -39,11 +39,6 @@ export default function Home() {
             icon="/icon-1.svg"
           />
           <ExperimentTile
-            name="click somewhere"
-            path="/experiment-click"
-            icon="/icon-2.svg"
-          />
-          <ExperimentTile
             name="choose a word"
             path="/experiment-word"
             icon="/icon-3.svg"
@@ -62,6 +57,11 @@ export default function Home() {
             name="make a sound"
             path="/experiment-sound"
             icon="/icon-6.svg"
+          />
+          <ExperimentTile
+            name="click somewhere"
+            path="/experiment-click"
+            icon="/icon-2.svg"
           />
         </div>
       </main>
